@@ -32,6 +32,9 @@ function Register() {
     return (
         <>
             <ContainerStyled>
+                <div style={{ display: 'flex', gap: '8px', margin: '5px 0px' }}>
+                    <Button variant="contained" onClick={formCadastro}>Cadastro</Button>
+                </div>
                 {mostrarBotao ? <FormUser /> : <FormLogin setMostrarBotao={setMostrarBotao} />}
             </ContainerStyled>
         </>

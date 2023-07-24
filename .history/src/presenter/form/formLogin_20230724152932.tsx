@@ -14,14 +14,13 @@ const FormStyled = styled.div`
   gap: 8px;
 `;
 
-function FormUser() {
+function FormLogin() {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
-    const [cpfErrorText, setCpfErrorText] = useState("");
-    const [isCpf, setIsCpf] = useState(false);
+   
+
     const [formData, setFormData] = useState({
-        usuario_nome: "",
-        usuario_cpf: "",
+      
         usuario_email: "",
         usuario_senha: ""
 
@@ -41,16 +40,7 @@ function FormUser() {
   
     const handleSubmit = async () => {
         try {
-            const { usuario_nome, usuario_cpf, usuario_email, usuario_senha } = formData;
-
-            if (!isCPF(usuario_cpf)) {
-                setIsCpf(true)
-                setCpfErrorText("Cpf Invalido!")
-                return;
-            } else {
-                setIsCpf(false)
-                setCpfErrorText("")
-            }
+            const { usuario_email, usuario_senha } = formData;
 
             if (!isEmailValid(usuario_email)) {
                 setUsuarioEmailError(true)
@@ -76,11 +66,8 @@ function FormUser() {
                 throw new Error("Erro ao salvar os dados do formulário");
             }
 
-            console.log(response.json());
-            // Opcionalmente, você pode redefinir os campos do formulário aqui
-            setFormData({
-                usuario_nome: "",
-                usuario_cpf: "",
+           
+            setFormData({    
                 usuario_email: "",
                 usuario_senha: ""
             });
@@ -93,25 +80,7 @@ function FormUser() {
         <>
            
                 <FormStyled>
-                    <h1>Cadastro de Usuario</h1>
-                    <TextField
-                        id="usuario_nome"
-                        name="usuario_nome"
-                        label="Nome"
-                        variant="outlined"
-                        value={formData.usuario_nome}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        id="usuario_cpf"
-                        name="usuario_cpf"
-                        label="CPF"
-                        error={isCpf}
-                        variant="outlined"
-                        value={formData.usuario_cpf}
-                        onChange={handleChange}
-                        helperText={cpfErrorText}
-                    />
+                    <h1>Login</h1>                                     
                     <TextField
                         id="usuario_email"
                         name="usuario_email"
@@ -143,4 +112,4 @@ function FormUser() {
     );
 }
 
-export default FormUser;
+export default FormLogin;

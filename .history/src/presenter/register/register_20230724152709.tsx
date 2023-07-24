@@ -23,19 +23,28 @@ const DivRowStyled = styled.div`
 
 
 function Register() {
-    const [mostrarBotao, setMostrarBotao] = useState(false);
+    const [mostrarBotao, setMostrar] = useState(true);
 
-    const formCadastro = () => {
-        setMostrarBotao(true);
+    
+    const cadastro = () => {
+        setMostrar(true)
     };
+    const login = () => {
+        setMostrar(false)
+    };
+   
 
     return (
         <>
             <ContainerStyled>
-                {mostrarBotao ? <FormUser /> : <FormLogin setMostrarBotao={setMostrarBotao} />}
+                <div style={{ display: 'flex', gap: '8px', margin: '5px 0px' }}>
+                    <Button variant="contained" onClick={cadastro}>Cadastro</Button>
+                    <Button variant="contained" onClick={login}>Login</Button>
+                </div>
+                {mostrarBotao == true ? <FormUser /> : <FormLogin />}
             </ContainerStyled>
         </>
-    );
+    )
 }
 
 export default Register;

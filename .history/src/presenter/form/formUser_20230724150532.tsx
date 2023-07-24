@@ -93,7 +93,6 @@ function FormUser() {
         <>
            
                 <FormStyled>
-                    <h1>Cadastro de Usuario</h1>
                     <TextField
                         id="usuario_nome"
                         name="usuario_nome"

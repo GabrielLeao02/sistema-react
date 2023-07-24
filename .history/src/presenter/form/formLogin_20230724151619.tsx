@@ -14,7 +14,7 @@ const FormStyled = styled.div`
   gap: 8px;
 `;
 
-function FormUser() {
+function FormLogin() {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
     const [cpfErrorText, setCpfErrorText] = useState("");
@@ -93,25 +93,9 @@ function FormUser() {
         <>
            
                 <FormStyled>
-                    <h1>Cadastro de Usuario</h1>
-                    <TextField
-                        id="usuario_nome"
-                        name="usuario_nome"
-                        label="Nome"
-                        variant="outlined"
-                        value={formData.usuario_nome}
-                        onChange={handleChange}
-                    />
-                    <TextField
-                        id="usuario_cpf"
-                        name="usuario_cpf"
-                        label="CPF"
-                        error={isCpf}
-                        variant="outlined"
-                        value={formData.usuario_cpf}
-                        onChange={handleChange}
-                        helperText={cpfErrorText}
-                    />
+                    <h1>Login</h1>
+                 
+                    
                     <TextField
                         id="usuario_email"
                         name="usuario_email"
@@ -143,4 +127,4 @@ function FormUser() {
     );
 }
 
-export default FormUser;
+export default FormLogin;

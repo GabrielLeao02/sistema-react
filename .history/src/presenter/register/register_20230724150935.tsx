@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import Button from '@mui/material/Button';
+import NavBar from '../navBar/navBar';
 import { useState } from 'react';
 import FormUser from "../form/formUser";
-import FormLogin from "../form/formLogin";
 
 const ContainerStyled = styled.div`
   box-sizing: border-box;
@@ -23,19 +23,20 @@ const DivRowStyled = styled.div`
 
 
 function Register() {
-    const [mostrarBotao, setMostrarBotao] = useState(false);
-
-    const formCadastro = () => {
-        setMostrarBotao(true);
-    };
+    const [mostrarBotao, setMostrar] = useState(true);
 
     return (
         <>
+
             <ContainerStyled>
-                {mostrarBotao ? <FormUser /> : <FormLogin setMostrarBotao={setMostrarBotao} />}
+                <div style={{display:'flex', gap:'8px', margin: '5px'}}>
+                    <Button variant="contained">Cadastro</Button>
+                    <Button variant="contained">Login</Button>
+                </div>
+
+                <FormUser />
             </ContainerStyled>
         </>
-    );
+    )
 }
-
-export default Register;
+export default Register

@@ -11,6 +11,7 @@ const FormStyled = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 800px;
   gap: 8px;
 `;
 
@@ -64,7 +65,7 @@ function FormUser() {
             const saltRounds = 10;
             const hashedPassword = await bcrypt.hash(usuario_senha, saltRounds);
             formData.usuario_senha = hashedPassword;
-            const response = await fetch("http://localhost:5000/salvarusuario", {
+            const response = await fetch("http://localhost/sistema/produtos/ready_produtos.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -91,9 +92,8 @@ function FormUser() {
 
     return (
         <>
-           
+            <ContainerGlobal>
                 <FormStyled>
-                    <h1>Cadastro de Usuario</h1>
                     <TextField
                         id="usuario_nome"
                         name="usuario_nome"
@@ -138,7 +138,7 @@ function FormUser() {
                         Salvar
                     </Button>
                 </FormStyled>
-            
+            </ContainerGlobal>
         </>
     );
 }

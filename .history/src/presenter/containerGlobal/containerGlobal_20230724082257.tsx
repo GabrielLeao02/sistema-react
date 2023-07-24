@@ -1,11 +1,9 @@
 import styled from "styled-components";
 
 const ContainerGlobal = styled.div`
-    padding: 20px;
+    padding: 0px;
     box-sizing: border-box;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    
+    margin: 10px 0px;
 `
 export default ContainerGlobal
