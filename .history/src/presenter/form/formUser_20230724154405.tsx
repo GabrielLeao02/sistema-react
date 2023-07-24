@@ -17,7 +17,7 @@ type FormLoginProps = {
     setMostrarBotao: (value: boolean) => void;
 };
 
-function FormUser({ setMostrarBotao }: FormLoginProps) {
+function FormUser( { setMostrarBotao }: FormLoginProps) {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
     const [cpfErrorText, setCpfErrorText] = useState("");
@@ -34,7 +34,7 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
         // Lógica do login
 
         // Após o login ser realizado com sucesso, chame a função setMostrarBotao
-        setMostrarBotao(false);
+        setMostrarBotao(true);
     };
 
 
@@ -148,9 +148,9 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
                 <Button variant="contained" onClick={handleSubmit}>
                     Cadastrar
                 </Button>
-
-                <Button variant="contained" onClick={registro}>Login</Button>
-
+                <div style={{ display: 'flex', gap: '8px', margin: '5px 0px' }}>
+                    <Button variant="contained" onClick={registro}>Login</Button>
+                </div>
             </FormStyled>
 
         </>

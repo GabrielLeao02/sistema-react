@@ -13,11 +13,8 @@ const FormStyled = styled.div`
   width: 100%;
   gap: 8px;
 `;
-type FormLoginProps = {
-    setMostrarBotao: (value: boolean) => void;
-};
 
-function FormUser({ setMostrarBotao }: FormLoginProps) {
+function FormUser() {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
     const [cpfErrorText, setCpfErrorText] = useState("");
@@ -29,14 +26,6 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
         usuario_senha: ""
 
     });
-
-    const registro = () => {
-        // Lógica do login
-
-        // Após o login ser realizado com sucesso, chame a função setMostrarBotao
-        setMostrarBotao(false);
-    };
-
 
     const handleChange = (e: SelectChangeEvent<string[]> | React.ChangeEvent<{ name: string; value: unknown }>) => {
         const { name, value } = e.target as HTMLInputElement;
@@ -148,9 +137,9 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
                 <Button variant="contained" onClick={handleSubmit}>
                     Cadastrar
                 </Button>
-
-                <Button variant="contained" onClick={registro}>Login</Button>
-
+                <div style={{ display: 'flex', gap: '8px', margin: '5px 0px' }}>
+                    <Button variant="contained" onClick={formCadastro}>Login</Button>
+                </div>
             </FormStyled>
 
         </>

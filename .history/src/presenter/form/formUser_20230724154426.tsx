@@ -34,7 +34,7 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
         // Lógica do login
 
         // Após o login ser realizado com sucesso, chame a função setMostrarBotao
-        setMostrarBotao(false);
+        setMostrarBotao(true);
     };
 
 
