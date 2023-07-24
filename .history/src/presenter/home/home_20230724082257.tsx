@@ -1,3 +1,5 @@
+import NavBar from "../navBar/navBar";
+
 
 function Home() {
 	return (
