@@ -4,7 +4,6 @@ import Home from './presenter/home/home';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
 import ContainerGlobal from './presenter/containerGlobal/containerGlobal';
-import styled from 'styled-components';
 const ContainerStyled = styled.div`
   box-sizing: border-box;
   display: flex;

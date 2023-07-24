@@ -67,7 +67,7 @@ const NavBar: React.VFC = () => {
                             LOGO
                         </Typography>
 
-                        {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
@@ -114,9 +114,9 @@ const NavBar: React.VFC = () => {
                                     {page}
                                 </Button>
                             ))}
-                        </Box> */}
+                        </Box>
 
-                        {/* <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -144,7 +144,7 @@ const NavBar: React.VFC = () => {
                                     </MenuItem>
                                 ))}
                             </Menu>
-                        </Box> */}
+                        </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
