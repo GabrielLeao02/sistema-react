@@ -3,7 +3,8 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import styled from "styled-components";
 import { SelectChangeEvent } from '@mui/material/Select';
-import bcrypt from 'bcryptjs';
+import sha256 from 'sha256';
+
 const FormStyled = styled.div`
   box-sizing: border-box;
   display: flex;
@@ -11,21 +12,18 @@ const FormStyled = styled.div`
   width: 100%;
   gap: 8px;
 `;
+
 type FormLoginProps = {
     setMostrarBotao: (value: boolean) => void;
 };
-
 
 function FormLogin({ setMostrarBotao }: FormLoginProps) {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
 
-
     const [formData, setFormData] = useState({
-
         usuario_email: "",
         usuario_senha: ""
-
     });
 
     const handleChange = (e: SelectChangeEvent<string[]> | React.ChangeEvent<{ name: string; value: unknown }>) => {
@@ -59,10 +57,12 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
                 setEmailErrorText("")
             }
 
-            const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(usuario_senha, saltRounds);
+
+            //   formData.usuario_senha = hashedPassword;
+            const hashedPassword = sha256(usuario_senha);
             formData.usuario_senha = hashedPassword;
-            const response = await fetch("http://localhost:5000/salvarusuario", {
+
+            const response = await fetch("http://localhost:5000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,7 +73,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             if (!response.ok) {
                 throw new Error("Erro ao salvar os dados do formulário");
             }
-
 
             setFormData({
                 usuario_email: "",
@@ -86,7 +85,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 
     return (
         <>
-
             <FormStyled>
                 <h1>Login</h1>
                 <TextField
@@ -99,16 +97,15 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
                     value={formData.usuario_email}
                     onChange={handleChange}
                     helperText={emailErrorText}
-                />                    <TextField
+                />
+                <TextField
                     id="usuario_senha"
                     name="usuario_senha"
-                    error={usuario_email_error}
                     label="Senha"
                     type="password"
                     variant="outlined"
                     value={formData.usuario_senha}
                     onChange={handleChange}
-                    helperText={emailErrorText}
                 />
 
                 <Button variant="contained" onClick={handleSubmit}>
@@ -116,7 +113,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
                 </Button>
                 <Button variant="contained" onClick={login}>Cadastro</Button>
             </FormStyled>
-
         </>
     );
 }
