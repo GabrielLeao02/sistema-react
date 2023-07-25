@@ -13,7 +13,7 @@ const RegisterStyles = styled.div`
     top: 0;
     left: 0 ;
     display: flex;
-    justify-content: end;
+    justify-content: start;
     align-items: start;
     padding: 30px;
     box-sizing: border-box;
