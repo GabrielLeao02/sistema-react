@@ -71,9 +71,7 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             });
 
             if (!response.ok) {
-                throw new Error("Erro ao logar");
-            } else {
-                window.location.href = "/home";
+                throw new Error("Erro ao salvar os dados do formulário");
             }
 
             setFormData({

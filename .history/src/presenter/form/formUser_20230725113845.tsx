@@ -86,8 +86,6 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
 
       if (!response.ok) {
         throw new Error("Erro ao salvar os dados do formulário");
-      } else {
-        window.location.href = "/";
       }
 
       console.log(await response.json());
