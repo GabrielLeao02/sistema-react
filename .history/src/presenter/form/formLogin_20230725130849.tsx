@@ -53,7 +53,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             if (!isEmailValid(usuario_email)) {
                 setUsuarioEmailError(true)
                 setEmailErrorText("Insira um email valido!")
-                setLoading(false)
                 return;
             } else {
                 setUsuarioEmailError(false)
@@ -74,7 +73,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             });
 
             if (!response.ok) {
-                setLoading(false)
                 throw new Error("Erro ao logar");
             } else {
                 window.location.href = "/home";

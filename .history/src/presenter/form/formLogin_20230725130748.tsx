@@ -53,7 +53,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             if (!isEmailValid(usuario_email)) {
                 setUsuarioEmailError(true)
                 setEmailErrorText("Insira um email valido!")
-                setLoading(false)
                 return;
             } else {
                 setUsuarioEmailError(false)
@@ -74,7 +73,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             });
 
             if (!response.ok) {
-                setLoading(false)
                 throw new Error("Erro ao logar");
             } else {
                 window.location.href = "/home";
@@ -115,7 +113,17 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
                 />
 
                 <Button variant="contained" onClick={handleSubmit}>
-                    {loading ?  "Carregando..."  : "Entrar"}
+                    {loading ? <CircularProgress
+                        variant="determinate"
+                        sx={{
+                            color: (theme) =>
+                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                        }}
+                        size={40}
+                        thickness={4}
+                        
+                        value={100}
+                    /> : "Entrar"}
                 </Button>
                 <Button variant="outlined" onClick={login}>Cadastro</Button>
             </FormStyled>

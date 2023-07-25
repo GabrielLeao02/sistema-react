@@ -74,7 +74,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             });
 
             if (!response.ok) {
-                setLoading(false)
                 throw new Error("Erro ao logar");
             } else {
                 window.location.href = "/home";
