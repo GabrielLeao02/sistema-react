@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
-
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import styled from "styled-components";
-import { SelectChangeEvent, Button, TextField, Typography, Box } from '@mui/material';
+import { SelectChangeEvent } from '@mui/material/Select';
 import sha256 from 'sha256';
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const FormStyled = styled.div`
   box-sizing: border-box;
@@ -22,7 +22,6 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
     const [loading, setLoading] = useState(false);
-    const [errorLogin, setErrorLogin] = useState(false);
     const [formData, setFormData] = useState({
         usuario_email: "",
         usuario_senha: ""
@@ -93,10 +92,9 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     return (
         <>
             <FormStyled>
-                <Box>
-                    <Typography variant="h4" >Login</Typography>
-                    {errorLogin ? <h1>teste</h1> : <></>}
-                </Box>
+                <div style={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
+                    <h1>Login</h1>
+                </div>
 
                 <TextField
                     id="usuario_email"

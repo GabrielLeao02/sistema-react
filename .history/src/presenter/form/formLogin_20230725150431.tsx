@@ -94,9 +94,12 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
         <>
             <FormStyled>
                 <Box>
-                    <Typography variant="h4" >Login</Typography>
+                <Typography variant="h4" >Login</Typography>
                     {errorLogin ? <h1>teste</h1> : <></>}
                 </Box>
+                <div style={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
+                    
+                </div>
 
                 <TextField
                     id="usuario_email"

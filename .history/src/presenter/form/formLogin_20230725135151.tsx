@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 import styled from "styled-components";
-import { SelectChangeEvent, Button, TextField, Typography, Box } from '@mui/material';
+import { SelectChangeEvent, Button, TextField, Typography } from '@mui/material';
 import sha256 from 'sha256';
 
 
@@ -93,10 +93,10 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     return (
         <>
             <FormStyled>
-                <Box>
-                    <Typography variant="h4" >Login</Typography>
+                <div style={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
+                    <Typography>Login</Typography>
                     {errorLogin ? <h1>teste</h1> : <></>}
-                </Box>
+                </div>
 
                 <TextField
                     id="usuario_email"
