@@ -4,17 +4,8 @@ import Home from './presenter/home/home';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
 import ContainerGlobal from './presenter/containerGlobal/containerGlobal';
-import styled from 'styled-components';
-const ContainerStyled = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: start;
-  margin-top: 80px;
-  width: 80%;  
-  max-width: 800px;
-`;
+import ContainerStyled from './presenter/containerGlobal/containerStyled';
+
 function App() {
 	return (
 		<>
