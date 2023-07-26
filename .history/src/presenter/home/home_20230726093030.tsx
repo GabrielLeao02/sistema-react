@@ -32,7 +32,7 @@ function Home() {
 				<div className="mixed-chart">
 					<Chart
 						options={data.options}
-						series={data.series}
+						series={data}
 						type="line"
 						width="500"
 					/>
