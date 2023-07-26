@@ -57,8 +57,8 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
             if (fieldValue == '') {
                 setLoading(false);
                 return setErrorLogin('Preencha todos os campos para realizar o login!')
-            }else {
-                 setErrorLogin('Preencha todos os campos para realizar o cadastro!')
+            } else {
+                setErrorLogin('')
             }
 
         }
