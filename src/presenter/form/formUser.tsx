@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { Box, Typography, SelectChangeEvent, TextField, Button } from "@mui/material";
 import styled from "styled-components";
-import { SelectChangeEvent } from '@mui/material/Select';
 import { isCPF } from 'brazilian-values';
 import sha256 from 'sha256';
 
@@ -23,6 +21,7 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
   const [usuario_email_error, setUsuarioEmailError] = useState(false);
   const [emailErrorText, setEmailErrorText] = useState("");
   const [cpfErrorText, setCpfErrorText] = useState("");
+  const [errorLogin, setErrorLogin] = useState('');
   const [isCpf, setIsCpf] = useState(false);
   const [formData, setFormData] = useState({
     usuario_nome: "",
@@ -52,6 +51,17 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
   };
 
   const handleSubmit = async () => {
+    for (const fieldName in formData) {
+
+      const fieldValue = formData[fieldName as keyof typeof formData];
+      if (fieldValue == '') {
+        // setLoading(false);
+        return setErrorLogin('Preencha todos os campos para realizar o cadastro!')
+      } else {
+        setErrorLogin('')
+      }
+
+    }
     try {
       const { usuario_cpf, usuario_email, usuario_senha } = formData;
 
@@ -85,7 +95,7 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao salvar os dados do formulário");
+        return setErrorLogin("Erro ao salvar os dados do formulário")
       } else {
         window.location.href = "/";
       }
@@ -147,6 +157,9 @@ function FormUser({ setMostrarBotao }: FormLoginProps) {
           onChange={handleChange}
           helperText={emailErrorText}
         />
+        <Box>
+          <Typography variant="caption" color={"red"}>{errorLogin}</Typography>
+        </Box>
 
         <Button variant="contained" onClick={handleSubmit}>
           Cadastrar

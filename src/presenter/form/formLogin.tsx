@@ -22,7 +22,7 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     const [usuario_email_error, setUsuarioEmailError] = useState(false);
     const [emailErrorText, setEmailErrorText] = useState("");
     const [loading, setLoading] = useState(false);
-    const [errorLogin, setErrorLogin] = useState(false);
+    const [errorLogin, setErrorLogin] = useState('');
     const [formData, setFormData] = useState({
         usuario_email: "",
         usuario_senha: ""
@@ -47,44 +47,57 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     };
 
     const handleSubmit = async () => {
-        setLoading(true)
-        try {
-            const { usuario_email, usuario_senha } = formData;
+        setLoading(true);
+        setLoading(true);
 
-            if (!isEmailValid(usuario_email)) {
-                setUsuarioEmailError(true)
-                setEmailErrorText("Insira um email valido!")
-                setLoading(false)
-                return;
-            } else {
-                setUsuarioEmailError(false)
-                setEmailErrorText("")
+        const { usuario_email, usuario_senha } = formData;
+        for (const fieldName in formData) {
+
+            const fieldValue = formData[fieldName as keyof typeof formData];
+            if (fieldValue == '') {
+                setLoading(false);
+                return setErrorLogin('Preencha todos os campos para realizar o login!')
+            }else {
+                 setErrorLogin('Preencha todos os campos para realizar o cadastro!')
             }
 
+        }
+        if (!isEmailValid(usuario_email)) {
+            setUsuarioEmailError(true);
+            setEmailErrorText("Insira um email válido!");
+            setLoading(false);
+            return;
+        } else {
 
-            //   formData.usuario_senha = hashedPassword;
-            const hashedPassword = sha256(usuario_senha);
-            formData.usuario_senha = hashedPassword;
+            setUsuarioEmailError(false);
+            setEmailErrorText("");
+        }
+
+        const hashedPassword = sha256(usuario_senha);
+
+        const formDataWithHash = {
+            usuario_email,
+            usuario_senha: hashedPassword,
+        };
+        try {
+
 
             const response = await fetch("http://localhost:5000/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formDataWithHash), // Enviar o objeto criptografado
             });
 
             if (!response.ok) {
-                setLoading(false)
+                setLoading(false);
+                setErrorLogin('As credenciais fornecidas são inválidas!')
                 throw new Error("Erro ao logar");
             } else {
                 window.location.href = "/home";
             }
 
-            setFormData({
-                usuario_email: "",
-                usuario_senha: ""
-            });
         } catch (error) {
             console.error(error);
         }
@@ -93,11 +106,7 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
     return (
         <>
             <FormStyled>
-                <Box>
-                    <Typography variant="h4" >Login</Typography>
-                    {errorLogin ? <h1>teste</h1> : <></>}
-                </Box>
-
+                <Typography variant="h4" >Login</Typography>
                 <TextField
                     id="usuario_email"
                     name="usuario_email"
@@ -118,6 +127,9 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
                     value={formData.usuario_senha}
                     onChange={handleChange}
                 />
+                <Box>
+                    <Typography variant="caption" color={"red"}>{errorLogin}</Typography>
+                </Box>
 
                 <Button variant="contained" onClick={handleSubmit}>
                     {loading ? "Carregando..." : "Entrar"}

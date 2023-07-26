@@ -24,7 +24,7 @@ const NavBarStyled = styled.div`
   align-items: center;
 `;
 
-const pages = ['register', 'Pricing', 'Blog'];
+const pages = [ 'Contato', 'Produtos'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar: React.VFC = () => {
@@ -67,14 +67,14 @@ const NavBar: React.VFC = () => {
                             LOGO
                         </Typography>
 
-                        {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size="large"
                                 aria-label="account of current user"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color="inherit"
+                                color="inherit" 
                             >
                                 <MenuIcon />
                             </IconButton>   
@@ -114,9 +114,9 @@ const NavBar: React.VFC = () => {
                                     {page}
                                 </Button>
                             ))}
-                        </Box> */}
+                        </Box>
 
-                        {/* <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -144,7 +144,7 @@ const NavBar: React.VFC = () => {
                                     </MenuItem>
                                 ))}
                             </Menu>
-                        </Box> */}
+                        </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
