@@ -24,7 +24,8 @@ const NavBarStyled = styled.div`
 	align-items: center;
 `;
 
-const pages = ['Contato', 'Produtos'];
+const pages = ['Contact', 'Products'];
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar: React.VFC = () => {
