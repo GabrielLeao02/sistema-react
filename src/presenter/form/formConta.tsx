@@ -1,3 +1,3 @@
-export function FormConta() {
+export function DebtManagementForm() {
 	return <></>;
 }

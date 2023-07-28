@@ -18,17 +18,17 @@ const FormStyled = styled.div`
 `;
 
 type FormLoginProps = {
-	setMostrarBotao: (value: boolean) => void;
+	setShowButton: (value: boolean) => void;
 };
 
-function FormLogin({ setMostrarBotao }: FormLoginProps) {
-	const [usuarioEmailError, setUsuarioEmailError] = useState(false);
+function LoginForm({ setShowButton }: FormLoginProps) {
+	const [userEmailError, setUserEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [errorLogin, setErrorLogin] = useState('');
 	const [formData, setFormData] = useState({
-		usuario_email: '',
-		usuario_senha: '',
+		user_email: '',
+		user_password: '',
 	});
 
 	const handleInputChange = (
@@ -41,51 +41,51 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 	};
 
 	const isEmailValid = (email: string) => {
-		// Expressão regular para validar o email
+		// Regular expression to validate the email
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailRegex.test(email);
 	};
 
 	const handleLogin = () => {
-		// Lógica de login
-		// Após o login ser realizado com sucesso, chame a função setMostrarBotao
-		setMostrarBotao(true);
+		// Login logic
+		// After successful login, call the setShowButton function
+		setShowButton(true);
 	};
+
 	const handleLoginUser = () => {
 		void handleSubmit();
 	};
+
 	const handleSubmit = async () => {
 		setLoading(true);
 
-		const { usuario_email, usuario_senha } = formData;
+		const { user_email, user_password } = formData;
 		for (const fieldName in formData) {
 			const fieldValue = formData[fieldName as keyof typeof formData];
 			if (fieldValue === '') {
 				setLoading(false);
-				setErrorLogin(
-					'Preencha todos os campos para realizar o login!'
-				);
+				setErrorLogin('Fill in all fields to log in!');
 				return;
 			} else {
 				setErrorLogin('');
 			}
 		}
 
-		if (!isEmailValid(usuario_email)) {
-			setUsuarioEmailError(true);
-			setEmailErrorText('Insira um email válido!');
+		if (!isEmailValid(user_email)) {
+			setUserEmailError(true);
+			setEmailErrorText('Enter a valid email!');
 			setLoading(false);
 			return;
 		} else {
-			setUsuarioEmailError(false);
+			setUserEmailError(false);
 			setEmailErrorText('');
 		}
 
-		const hashedPassword = sha256(usuario_senha);
+		const hashedPassword = sha256(user_password);
 
 		const formDataWithHash = {
-			usuario_email,
-			usuario_senha: hashedPassword,
+			user_email,
+			user_password: hashedPassword,
 		};
 
 		try {
@@ -99,13 +99,13 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 
 			if (!response.ok) {
 				setLoading(false);
-				setErrorLogin('As credenciais fornecidas são inválidas!');
-				throw new Error('Erro ao logar');
+				setErrorLogin('The provided credentials are invalid!');
+				throw new Error('Error logging in');
 			} else {
 				window.location.href = '/home';
 			}
 		} catch (error) {
-			throw new Error('Erro ao Conectar');
+			throw new Error('Error connecting');
 		}
 	};
 
@@ -114,23 +114,23 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 			<FormStyled>
 				<Typography variant='h4'>Login</Typography>
 				<TextField
-					id='usuario_email'
-					name='usuario_email'
-					error={usuarioEmailError}
+					id='user_email'
+					name='user_email'
+					error={userEmailError}
 					label='E-mail'
 					type='email'
 					variant='outlined'
-					value={formData.usuario_email}
+					value={formData.user_email}
 					onChange={handleInputChange}
 					helperText={emailErrorText}
 				/>
 				<TextField
-					id='usuario_senha'
-					name='usuario_senha'
-					label='Senha'
+					id='user_password'
+					name='user_password'
+					label='Password'
 					type='password'
 					variant='outlined'
-					value={formData.usuario_senha}
+					value={formData.user_password}
 					onChange={handleInputChange}
 				/>
 				<Box>
@@ -140,14 +140,14 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 				</Box>
 
 				<Button variant='contained' onClick={handleLoginUser}>
-					{loading ? 'Carregando...' : 'Entrar'}
+					{loading ? 'Loading...' : 'Login'}
 				</Button>
 				<Button variant='outlined' onClick={handleLogin}>
-					Cadastro
+					Register
 				</Button>
 			</FormStyled>
 		</>
 	);
 }
 
-export default FormLogin;
+export default LoginForm;

@@ -2,13 +2,13 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from './presenter/home/home';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
-import ContainerGlobal from './presenter/containerGlobal/containerGlobal';
-import ContainerStyled from './presenter/containerGlobal/containerStyled';
+import GlobalContainer from './presenter/containerGlobal/containerGlobal';
+import StyledContainer from './presenter/containerGlobal/StyledContainer';
 
 function App() {
 	return (
 		<>
-			<ContainerGlobal>
+			<GlobalContainer>
 				<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Register />} />
@@ -17,16 +17,16 @@ function App() {
 							element={
 								<>
 									<NavBar />
-									<ContainerStyled>
+									<StyledContainer>
 										<Home />
-									</ContainerStyled>
+									</StyledContainer>
 								</>
 							}
 						/>
 						<Route path='/register' element={<Register />} />
 					</Routes>
 				</BrowserRouter>
-			</ContainerGlobal>
+			</GlobalContainer>
 		</>
 	);
 }
