@@ -8,7 +8,6 @@ import ContainerStyled from './presenter/containerGlobal/containerStyled';
 function App() {
 	return (
 		<>
-			<NavBar />
 			<ContainerGlobal>
 				<BrowserRouter>
 					<Routes>
@@ -16,9 +15,12 @@ function App() {
 						<Route
 							path='/home'
 							element={
-								<ContainerStyled>
-									<Home />
-								</ContainerStyled>
+								<>
+									<NavBar />
+									<ContainerStyled>
+										<Home />
+									</ContainerStyled>
+								</>
 							}
 						/>
 						<Route path='/register' element={<Register />} />

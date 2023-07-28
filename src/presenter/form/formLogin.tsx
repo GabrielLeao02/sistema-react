@@ -51,8 +51,10 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 		// Após o login ser realizado com sucesso, chame a função setMostrarBotao
 		setMostrarBotao(true);
 	};
-
-	const handleSubmit = async (): void => {
+	const handleLoginUser = () => {
+		void handleSubmit();
+	};
+	const handleSubmit = async () => {
 		setLoading(true);
 
 		const { usuario_email, usuario_senha } = formData;
@@ -103,7 +105,7 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 				window.location.href = '/home';
 			}
 		} catch (error) {
-			console.error(error);
+			throw new Error('Erro ao Conectar');
 		}
 	};
 
@@ -137,7 +139,7 @@ function FormLogin({ setMostrarBotao }: FormLoginProps) {
 					</Typography>
 				</Box>
 
-				<Button variant='contained' onClick={handleSubmit}>
+				<Button variant='contained' onClick={handleLoginUser}>
 					{loading ? 'Carregando...' : 'Entrar'}
 				</Button>
 				<Button variant='outlined' onClick={handleLogin}>
