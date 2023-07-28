@@ -1,4 +1,3 @@
-
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from './presenter/home/home';
 import Register from './presenter/register/register';
@@ -11,15 +10,20 @@ function App() {
 		<>
 			<NavBar />
 			<ContainerGlobal>
-				
-					<BrowserRouter>
-						<Routes>
-							<Route path='/' element={<Register />} />
-							<Route path='/home' element={<ContainerStyled><Home /></ContainerStyled>} />
-							<Route path='/register' element={<Register />} />
-						</Routes>
-					</BrowserRouter>
-				
+				<BrowserRouter>
+					<Routes>
+						<Route path='/' element={<Register />} />
+						<Route
+							path='/home'
+							element={
+								<ContainerStyled>
+									<Home />
+								</ContainerStyled>
+							}
+						/>
+						<Route path='/register' element={<Register />} />
+					</Routes>
+				</BrowserRouter>
 			</ContainerGlobal>
 		</>
 	);
