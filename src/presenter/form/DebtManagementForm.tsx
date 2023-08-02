@@ -1,4 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components';
 import {
 	SelectChangeEvent,
@@ -10,6 +12,8 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
+	useTheme,
+	ThemeProvider,
 } from '@mui/material';
 import sha256 from 'sha256';
 
@@ -22,8 +26,8 @@ const FormStyled = styled.div`
 `;
 
 const DebtManagementForm = () => {
-	const [userEmailError, setUserEmailError] = useState(false);
-	const [emailErrorText, setEmailErrorText] = useState('');
+	const theme = useTheme();
+
 	const [loading, setLoading] = useState(false);
 	const [errorLogin, setErrorLogin] = useState('');
 	const [formData, setFormData] = useState({
@@ -63,16 +67,6 @@ const DebtManagementForm = () => {
 			setErrorLogin('');
 		}
 
-		if (!isEmailValid(user_email)) {
-			setUserEmailError(true);
-			setEmailErrorText('Enter a valid email!');
-			setLoading(false);
-			return;
-		} else {
-			setUserEmailError(false);
-			setEmailErrorText('');
-		}
-
 		const hashedPassword = sha256(user_password);
 
 		const formDataWithHash = {
@@ -107,57 +101,77 @@ const DebtManagementForm = () => {
 
 	return (
 		<>
-			<FormStyled>
-				<Typography variant='h4'>Accounts Payable</Typography>
+			<ThemeProvider theme={theme}>
+				<FormStyled>
+					<Box
+						display={'flex'}
+						alignItems={'center'}
+						justifyContent={'space-between'}
+					>
+						<Typography variant='h4'>Accounts Payable</Typography>
+						<AddIcon color='primary' />
+					</Box>
 
-				<Box display={'flex'} gap={'4px'} sx={{ width: '100%' }}>
-					<FormControl fullWidth>
-						<InputLabel id='account_category-label'>
-							Category
-						</InputLabel>
-						<Select
-							labelId='account_category-label'
-							id='account_category'
-							value={selectedCategory}
-							label='Category'
-							onChange={handleChangeSelectCategory}
-						>
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
-						</Select>
-					</FormControl>
+					<Box
+						display={'flex'}
+						alignItems={'center'}
+						justifyContent={'space-between'}
+						gap={'4px'}
+						sx={{ width: '100%' }}
+					>
+						<FormControl fullWidth>
+							<InputLabel id='account_category-label'>
+								Category
+							</InputLabel>
+							<Select
+								labelId='account_category-label'
+								id='account_category'
+								value={selectedCategory}
+								label='Category'
+								onChange={handleChangeSelectCategory}
+							>
+								<MenuItem value={10}>Ten</MenuItem>
+								<MenuItem value={20}>Twenty</MenuItem>
+								<MenuItem value={30}>Thirty</MenuItem>
+							</Select>
+						</FormControl>
 
-					<TextField
-						id='account_product'
-						name='account_product'
-						label='Product'
-						variant='outlined'
-						value={formData.account_product}
-						onChange={handleInputChange}
-					/>
-					<TextField
-						id='account_product_value'
-						name='account_product_value'
-						label='Product Value'
-						variant='outlined'
-						value={formData.account_product_value}
-						onChange={handleInputChange}
-					/>
-				</Box>
-				<Box>
-					<Typography variant='caption' color='red'>
-						{errorLogin}
-					</Typography>
-				</Box>
+						<TextField
+							id='account_product'
+							name='account_product'
+							label='Product'
+							variant='outlined'
+							value={formData.account_product}
+							onChange={handleInputChange}
+						/>
+						<TextField
+							id='account_product_value'
+							name='account_product_value'
+							label='Product Value'
+							variant='outlined'
+							value={formData.account_product_value}
+							onChange={handleInputChange}
+						/>
+						<DeleteIcon color='error' />
+					</Box>
+					<Box>
+						<Typography variant='caption' color='red'>
+							{errorLogin}
+						</Typography>
+					</Box>
 
-				<Button variant='contained' onClick={handleInsertData}>
-					{loading ? 'Loading...' : 'Insert Data'}
-				</Button>
-				<Button variant='outlined'>
-					{loading ? 'Loading...' : 'Remove all Data'}
-				</Button>
-			</FormStyled>
+					<Button
+						variant='contained'
+						onClick={handleInsertData}
+						style={{ color: theme.typography.button.color }}
+					>
+						{loading ? 'Loading...' : 'Insert Data'}
+					</Button>
+					<Button variant='outlined'>
+						{loading ? 'Loading...' : 'Remove all Data'}
+					</Button>
+				</FormStyled>
+			</ThemeProvider>
 		</>
 	);
 };
