@@ -50,7 +50,8 @@ const DebtManagementForm = () => {
 		return emailRegex.test(email);
 	};
 
-	const handleSubmit = async () => {
+	const handleInsertData = (event: React.FormEvent) => {
+		event.preventDefault(); // Impede o comportamento padrão do formulário
 		setLoading(true);
 
 		const { user_email, user_password } = formData;
@@ -81,25 +82,27 @@ const DebtManagementForm = () => {
 			account_product_value: formData.account_product_value,
 		};
 
-		try {
-			const response = await fetch('http://localhost:5000/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formDataWithHash),
-			});
-
-			if (!response.ok) {
+		fetch('http://localhost:5000/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formDataWithHash),
+		})
+			.then((response) => {
+				if (!response.ok) {
+					setLoading(false);
+					setErrorLogin('The provided credentials are invalid!');
+					throw new Error('Error logging in');
+				} else {
+					window.location.href = '/home';
+				}
+			})
+			.catch((error) => {
 				setLoading(false);
-				setErrorLogin('The provided credentials are invalid!');
-				throw new Error('Error logging in');
-			} else {
-				window.location.href = '/home';
-			}
-		} catch (error) {
-			throw new Error('Error connecting');
-		}
+				console.error('Error:', error);
+				throw new Error('Error connecting');
+			});
 	};
 
 	return (
@@ -107,7 +110,7 @@ const DebtManagementForm = () => {
 			<FormStyled>
 				<Typography variant='h4'>Accounts Payable</Typography>
 
-				<Box sx={{ width: '500px' }}>
+				<Box display={'flex'} gap={'4px'} sx={{ width: '100%' }}>
 					<FormControl fullWidth>
 						<InputLabel id='account_category-label'>
 							Category
@@ -124,31 +127,35 @@ const DebtManagementForm = () => {
 							<MenuItem value={30}>Thirty</MenuItem>
 						</Select>
 					</FormControl>
+
+					<TextField
+						id='account_product'
+						name='account_product'
+						label='Product'
+						variant='outlined'
+						value={formData.account_product}
+						onChange={handleInputChange}
+					/>
+					<TextField
+						id='account_product_value'
+						name='account_product_value'
+						label='Product Value'
+						variant='outlined'
+						value={formData.account_product_value}
+						onChange={handleInputChange}
+					/>
 				</Box>
-				<TextField
-					id='account_product'
-					name='account_product'
-					label='Product'
-					variant='outlined'
-					value={formData.account_product}
-					onChange={handleInputChange}
-				/>
-				<TextField
-					id='account_product_value'
-					name='account_product_value'
-					label='Product Value'
-					variant='outlined'
-					value={formData.account_product_value}
-					onChange={handleInputChange}
-				/>
 				<Box>
 					<Typography variant='caption' color='red'>
 						{errorLogin}
 					</Typography>
 				</Box>
 
-				<Button variant='contained' onClick={handleSubmit}>
+				<Button variant='contained' onClick={handleInsertData}>
 					{loading ? 'Loading...' : 'Insert Data'}
+				</Button>
+				<Button variant='outlined'>
+					{loading ? 'Loading...' : 'Remove all Data'}
 				</Button>
 			</FormStyled>
 		</>

@@ -25,7 +25,7 @@ function Home() {
 		],
 	};
 	return (
-		<div className='app'>
+		<div className='app' style={{ width: '100%' }}>
 			<div className='row'>
 				<div className='mixed-chart'>
 					<DebtManagementForm />
