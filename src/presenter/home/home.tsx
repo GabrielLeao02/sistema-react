@@ -1,5 +1,5 @@
 import Chart from 'react-apexcharts';
-
+import DebtManagementForm from '../form/DebtManagementForm';
 function Home() {
 	const data = {
 		options: {
@@ -28,12 +28,13 @@ function Home() {
 		<div className='app'>
 			<div className='row'>
 				<div className='mixed-chart'>
-					<Chart
+					<DebtManagementForm />
+					{/* <Chart
 						options={data.options}
 						series={data.series}
 						type='line'
 						width='500'
-					/>
+					/> */}
 				</div>
 			</div>
 		</div>
