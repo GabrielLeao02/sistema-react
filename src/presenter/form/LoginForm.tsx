@@ -8,6 +8,7 @@ import {
 	Box,
 } from '@mui/material';
 import sha256 from 'sha256';
+import { useNavigate } from 'react-router-dom';
 
 const FormStyled = styled.div`
 	box-sizing: border-box;
@@ -22,6 +23,7 @@ type FormLoginProps = {
 };
 
 function LoginForm({ setShowButton }: FormLoginProps) {
+	const navigate = useNavigate();
 	const [userEmailError, setUserEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -89,20 +91,25 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 		};
 
 		try {
-			const response = await fetch('http://localhost:5000/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formDataWithHash),
-			});
+			const response = await fetch(
+				'https://gabrielleaotech.com/sistema/produtos/ready_produtos.php',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(formDataWithHash),
+				}
+			);
 
 			if (!response.ok) {
+				navigate('/accounts/home');
+
 				setLoading(false);
 				setErrorLogin('The provided credentials are invalid!');
 				throw new Error('Error logging in');
 			} else {
-				window.location.href = '/home';
+				navigate('/accounts/home');
 			}
 		} catch (error) {
 			throw new Error('Error connecting');

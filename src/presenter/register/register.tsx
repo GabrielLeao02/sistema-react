@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import StyledContainer from '../containerGlobal/StyledContainer';
 
 const RegisterStyles = styled.div`
-	background-image: url('/src/presenter/register/office.jpg');
+	background-image: url(https://gabrielleaotech.com/accounts/image/office.jpg);
 	background-size: cover;
 	width: 100vw;
 	height: 100vh;

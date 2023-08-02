@@ -47,13 +47,6 @@ const DebtManagementForm = () => {
 		const { name, value } = e.target;
 		setFormData((prevData) => ({ ...prevData, [name]: value }));
 	};
-
-	const isEmailValid = (email: string) => {
-		// Regular expression to validate the email
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailRegex.test(email);
-	};
-
 	const handleInsertData = (event: React.FormEvent) => {
 		event.preventDefault(); // Impede o comportamento padrão do formulário
 		setLoading(true);
