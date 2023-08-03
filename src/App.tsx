@@ -13,6 +13,9 @@ function App() {
 			primary: {
 				main: '#fcc116', // Insira a cor primária desejada aqui
 			},
+			secondary: {
+				main: '#333333',
+			},
 		},
 		typography: {
 			button: {

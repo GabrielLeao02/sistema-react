@@ -143,7 +143,7 @@ const NavBar: React.VFC = () => {
 									style={{
 										cursor: 'pointer',
 										background:
-											theme.typography.button.color,
+											theme.palette.secondary.main,
 										color: theme.palette.primary.main,
 										width: '100%',
 									}}
