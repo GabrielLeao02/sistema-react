@@ -95,7 +95,7 @@ const DebtManagementForm = () => {
 						justifyContent={'space-between'}
 					>
 						<Typography variant='h4'>Accounts Payable</Typography>
-						<AddIcon color='primary' onClick={addedRegisterAccountPayable} />
+						<AddIcon color='primary' onClick={addedRegisterAccountPayable} style={{ cursor: 'pointer' }} />
 					</Box>
 
 					{records.map((record, index) => (
@@ -152,6 +152,7 @@ const DebtManagementForm = () => {
 							<DeleteIcon
 								color='error'
 								onClick={() => handleDeleteRecord(index)}
+								style={{ cursor: 'pointer' }}
 							/>
 						</Box>
 					))}
@@ -164,11 +165,11 @@ const DebtManagementForm = () => {
 					<Button
 						variant='contained'
 						onClick={handleInsertData}
-						style={{ color: theme.typography.button.color }}
+						style={{ color: theme.typography.button.color, cursor: 'pointer' }}
 					>
 						{loading ? 'Loading...' : 'Insert Data'}
 					</Button>
-					<Button variant='outlined'>
+					<Button variant='outlined' style={{ cursor: 'pointer' }}>
 						{loading ? 'Loading...' : 'Remove all Data'}
 					</Button>
 				</FormStyled>
