@@ -48,6 +48,10 @@ type Record = {
 	account_product_value: string;
 };
 
+// ... (código anterior)
+
+// ... (código anterior)
+
 const DebtManagementForm = () => {
 	const theme = useTheme();
 	const [loading, setLoading] = useState(false);
@@ -107,14 +111,26 @@ const DebtManagementForm = () => {
 
 	return (
 		<>
-			<ThemeProvider theme={theme}>
+			<ThemeProvider
+				theme={{
+					...theme,
+					palette: {
+						...theme.palette,
+						text: {
+							primary: theme.palette.primary.light,
+						},
+					},
+				}}
+			>
 				<FormStyled>
 					<Box
 						display={'flex'}
 						alignItems={'center'}
 						justifyContent={'space-between'}
 					>
-						<Typography variant='h4'>Accounts Payable</Typography>
+						<Typography variant='h4' color='textPrimary'>
+							Accounts Payable
+						</Typography>
 						<AddIconWrapper
 							color='primary'
 							onClick={addedRegisterAccountPayable}
@@ -135,6 +151,9 @@ const DebtManagementForm = () => {
 							<FormControl fullWidth>
 								<InputLabel
 									id={`account_category-label-${index}`}
+									style={{
+										color: theme.palette.primary.light,
+									}}
 								>
 									Category
 								</InputLabel>
@@ -148,12 +167,38 @@ const DebtManagementForm = () => {
 									}
 									name='account_category'
 								>
-									<MenuItem value=''>
+									<MenuItem
+										style={{
+											color: theme.palette.secondary.main,
+										}}
+										value=''
+									>
 										Select an option
 									</MenuItem>
-									<MenuItem value='Mercado'>Mercado</MenuItem>
-									<MenuItem value='Casa'>Casa</MenuItem>
-									<MenuItem value='Pets'>Pets</MenuItem>
+									<MenuItem
+										style={{
+											color: theme.palette.secondary.main,
+										}}
+										value='Mercado'
+									>
+										Mercado
+									</MenuItem>
+									<MenuItem
+										style={{
+											color: theme.palette.secondary.main,
+										}}
+										value='Casa'
+									>
+										Casa
+									</MenuItem>
+									<MenuItem
+										style={{
+											color: theme.palette.secondary.main,
+										}}
+										value='Pets'
+									>
+										Pets
+									</MenuItem>
 								</Select>
 							</FormControl>
 
@@ -166,6 +211,21 @@ const DebtManagementForm = () => {
 								onChange={(
 									e: React.ChangeEvent<HTMLInputElement>
 								) => handleInputChange(e, index)}
+								InputLabelProps={{
+									style: {
+										color: theme.palette.primary.light,
+										borderColor:
+											theme.palette.primary.light,
+									},
+									// Cor do texto do label
+								}}
+								InputProps={{
+									style: {
+										color: theme.palette.primary.light,
+										borderColor:
+											theme.palette.primary.light,
+									}, // Cor do texto e da borda do input
+								}}
 							/>
 							<TextField
 								id={`account_product_value-${index}`}
@@ -176,6 +236,21 @@ const DebtManagementForm = () => {
 								onChange={(
 									e: React.ChangeEvent<HTMLInputElement>
 								) => handleInputChange(e, index)}
+								InputLabelProps={{
+									style: {
+										color: theme.palette.primary.light,
+										borderColor:
+											theme.palette.primary.light,
+									},
+									// Cor do texto do label
+								}}
+								InputProps={{
+									style: {
+										color: theme.palette.primary.light,
+										borderColor:
+											theme.palette.primary.light,
+									}, // Cor do texto e da borda do input
+								}}
 							/>
 							<RemoveIconWrapper
 								color='error'
