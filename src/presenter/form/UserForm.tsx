@@ -9,6 +9,7 @@ import {
 import styled from 'styled-components';
 import { isCPF } from 'brazilian-values';
 import sha256 from 'sha256';
+import { useNavigate } from 'react-router-dom';
 
 const FormStyled = styled.div`
 	box-sizing: border-box;
@@ -23,6 +24,7 @@ type FormLoginProps = {
 };
 
 function UserForm({ setShowButton }: FormLoginProps) {
+	const navigate = useNavigate();
 	const [emailError, setEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
 	const [cpfErrorText, setCpfErrorText] = useState('');
@@ -94,18 +96,21 @@ function UserForm({ setShowButton }: FormLoginProps) {
 			// Hash the password using SHA-256
 			const hashedPassword = sha256(user_password);
 			formData.user_password = hashedPassword;
-			const response = await fetch('http://localhost:5000/saveuser', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formData),
-			});
+			const response = await fetch(
+				'https://gabrielleaotech.com/sistema/user/register.php',
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(formData),
+				}
+			);
 
 			if (!response.ok) {
 				return setRegistrationError('Error saving form data');
 			} else {
-				window.location.href = '/';
+				navigate('/accounts/home');
 			}
 
 			console.log(await response.json());

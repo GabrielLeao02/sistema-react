@@ -92,7 +92,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 
 		try {
 			const response = await fetch(
-				'https://gabrielleaotech.com/sistema/produtos/login.php',
+				'https://gabrielleaotech.com/sistema/user/login.php',
 				{
 					method: 'POST',
 					headers: {
