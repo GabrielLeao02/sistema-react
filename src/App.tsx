@@ -22,7 +22,7 @@ function App() {
 				500: '#272727', // Defina aqui a cor de cinza desejada para a borda
 			},
 			text: {
-				primary: '#fff',
+				primary: '#333333',
 			},
 		},
 		typography: {
