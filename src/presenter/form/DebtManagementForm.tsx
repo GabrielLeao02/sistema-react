@@ -24,6 +24,24 @@ const FormStyled = styled.div`
   gap: 8px;
 `;
 
+const AddIconWrapper = styled(AddIcon)`
+  cursor: pointer;
+
+  &:hover {
+	border-radius: 50%;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+`;
+
+const RemoveIconWrapper = styled(DeleteIcon)`
+  cursor: pointer;
+
+  &:hover {
+	border-radius: 50%;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+`;
+
 type Record = {
 	account_category: string;
 	account_product: string;
@@ -95,7 +113,7 @@ const DebtManagementForm = () => {
 						justifyContent={'space-between'}
 					>
 						<Typography variant='h4'>Accounts Payable</Typography>
-						<AddIcon color='primary' onClick={addedRegisterAccountPayable} style={{ cursor: 'pointer' }} />
+						<AddIconWrapper color='primary' onClick={addedRegisterAccountPayable} style={{ cursor: 'pointer' }} />
 					</Box>
 
 					{records.map((record, index) => (
@@ -149,7 +167,7 @@ const DebtManagementForm = () => {
 									handleInputChange(e, index)
 								}
 							/>
-							<DeleteIcon
+							<RemoveIconWrapper
 								color='error'
 								onClick={() => handleDeleteRecord(index)}
 								style={{ cursor: 'pointer' }}
