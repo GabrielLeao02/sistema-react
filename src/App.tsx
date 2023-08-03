@@ -3,8 +3,8 @@ import Home from './presenter/home/home';
 import GlobalContainer from './presenter/containerGlobal/GlobalContainer';
 import StyledContainer from './presenter/containerGlobal/StyledContainer';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Register from './presenter/register/Register';
-import NavBar from './presenter/navBar/NavBar';
+import Register from './presenter/register/register';
+import NavBar from './presenter/navBar/navBar';
 
 function App() {
 	// Definir a cor primária personalizada
@@ -27,9 +27,9 @@ function App() {
 			<GlobalContainer>
 				<BrowserRouter>
 					<Routes>
-						<Route path='/' element={<Register />} />
+						<Route path='accounts/' element={<Register />} />
 						<Route
-							path='/home'
+							path='accounts/home'
 							element={
 								<>
 									<NavBar />
@@ -39,7 +39,10 @@ function App() {
 								</>
 							}
 						/>
-						<Route path='/register' element={<Register />} />
+						<Route
+							path='accounts/register'
+							element={<Register />}
+						/>
 					</Routes>
 				</BrowserRouter>
 			</GlobalContainer>

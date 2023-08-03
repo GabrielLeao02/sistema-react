@@ -17,29 +17,29 @@ import {
 } from '@mui/material';
 
 const FormStyled = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 8px;
 `;
 
 const AddIconWrapper = styled(AddIcon)`
-  cursor: pointer;
+	cursor: pointer;
 
-  &:hover {
-	border-radius: 50%;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
+	&:hover {
+		border-radius: 50%;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	}
 `;
 
 const RemoveIconWrapper = styled(DeleteIcon)`
-  cursor: pointer;
+	cursor: pointer;
 
-  &:hover {
-	border-radius: 50%;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
+	&:hover {
+		border-radius: 50%;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	}
 `;
 
 type Record = {
@@ -53,18 +53,19 @@ const DebtManagementForm = () => {
 	const [loading, setLoading] = useState(false);
 	const [errorLogin, setErrorLogin] = useState('');
 
-	const [records, setRecords] = useState<Record[]>([{
-		account_category: '',
-		account_product: '',
-		account_product_value: '',
-	}]);
+	const [records, setRecords] = useState<Record[]>([
+		{
+			account_category: '',
+			account_product: '',
+			account_product_value: '',
+		},
+	]);
 
 	const handleInputChange = (
 		e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>,
 		index: number
 	) => {
 		const { name, value } = e.target;
-
 
 		// Atualiza os dados do registro atual no array de records
 		setRecords((prevRecords) => {
@@ -101,6 +102,7 @@ const DebtManagementForm = () => {
 			account_data: records,
 		};
 		console.log(formDataWithHash);
+		setErrorLogin('');
 	};
 
 	return (
@@ -113,7 +115,11 @@ const DebtManagementForm = () => {
 						justifyContent={'space-between'}
 					>
 						<Typography variant='h4'>Accounts Payable</Typography>
-						<AddIconWrapper color='primary' onClick={addedRegisterAccountPayable} style={{ cursor: 'pointer' }} />
+						<AddIconWrapper
+							color='primary'
+							onClick={addedRegisterAccountPayable}
+							style={{ cursor: 'pointer' }}
+						/>
 					</Box>
 
 					{records.map((record, index) => (
@@ -127,7 +133,9 @@ const DebtManagementForm = () => {
 							id='form-box'
 						>
 							<FormControl fullWidth>
-								<InputLabel id={`account_category-label-${index}`}>
+								<InputLabel
+									id={`account_category-label-${index}`}
+								>
 									Category
 								</InputLabel>
 								<Select
@@ -140,7 +148,9 @@ const DebtManagementForm = () => {
 									}
 									name='account_category'
 								>
-									<MenuItem value=''>Select an option</MenuItem>
+									<MenuItem value=''>
+										Select an option
+									</MenuItem>
 									<MenuItem value='Mercado'>Mercado</MenuItem>
 									<MenuItem value='Casa'>Casa</MenuItem>
 									<MenuItem value='Pets'>Pets</MenuItem>
@@ -153,9 +163,9 @@ const DebtManagementForm = () => {
 								label='Product'
 								variant='outlined'
 								value={record.account_product}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									handleInputChange(e, index)
-								}
+								onChange={(
+									e: React.ChangeEvent<HTMLInputElement>
+								) => handleInputChange(e, index)}
 							/>
 							<TextField
 								id={`account_product_value-${index}`}
@@ -163,9 +173,9 @@ const DebtManagementForm = () => {
 								label='Product Value'
 								variant='outlined'
 								value={record.account_product_value}
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-									handleInputChange(e, index)
-								}
+								onChange={(
+									e: React.ChangeEvent<HTMLInputElement>
+								) => handleInputChange(e, index)}
 							/>
 							<RemoveIconWrapper
 								color='error'
@@ -183,7 +193,10 @@ const DebtManagementForm = () => {
 					<Button
 						variant='contained'
 						onClick={handleInsertData}
-						style={{ color: theme.typography.button.color, cursor: 'pointer' }}
+						style={{
+							color: theme.typography.button.color,
+							cursor: 'pointer',
+						}}
 					>
 						{loading ? 'Loading...' : 'Insert Data'}
 					</Button>
