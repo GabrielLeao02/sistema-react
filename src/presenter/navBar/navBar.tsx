@@ -148,7 +148,7 @@ const NavBar: React.VFC = () => {
 								>
 									<Avatar
 										alt='Remy Sharp'
-										src='/static/images/avatar/2.jpg'
+										src='#'
 									/>
 								</IconButton>
 							</Tooltip>

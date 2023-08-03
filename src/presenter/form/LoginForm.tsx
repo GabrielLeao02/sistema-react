@@ -123,6 +123,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 					value={formData.user_email}
 					onChange={handleInputChange}
 					helperText={emailErrorText}
+					autoComplete="off"
 				/>
 				<TextField
 					id='user_password'
@@ -132,6 +133,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 					variant='outlined'
 					value={formData.user_password}
 					onChange={handleInputChange}
+					autoComplete="off"
 				/>
 				<Box>
 					<Typography variant='caption' color='red'>

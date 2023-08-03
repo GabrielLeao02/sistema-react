@@ -15,88 +15,74 @@ import {
 	useTheme,
 	ThemeProvider,
 } from '@mui/material';
-import sha256 from 'sha256';
 
 const FormStyled = styled.div`
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	gap: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
 `;
+
+type Record = {
+	account_category: string;
+	account_product: string;
+	account_product_value: string;
+};
 
 const DebtManagementForm = () => {
 	const theme = useTheme();
-
 	const [loading, setLoading] = useState(false);
 	const [errorLogin, setErrorLogin] = useState('');
-	const [formData, setFormData] = useState({
-		user_email: '',
-		user_password: '',
+
+	const [records, setRecords] = useState<Record[]>([{
+		account_category: '',
 		account_product: '',
 		account_product_value: '',
-	});
+	}]);
 
-	const [selectedCategory, setSelectedCategory] = useState<string>('');
-
-	const handleChangeSelectCategory = (event: SelectChangeEvent<string>) => {
-		setSelectedCategory(event.target.value);
-	};
-
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleInputChange = (
+		e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>,
+		index: number
+	) => {
 		const { name, value } = e.target;
-		setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+
+		// Atualiza os dados do registro atual no array de records
+		setRecords((prevRecords) => {
+			const updatedRecord = {
+				...prevRecords[index],
+				[name]: value,
+			};
+			return Object.assign([...prevRecords], { [index]: updatedRecord });
+		});
 	};
 
-	const isEmailValid = (email: string) => {
-		// Regular expression to validate the email
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailRegex.test(email);
+	const addedRegisterAccountPayable = () => {
+		setRecords((prevRecords) => [
+			...prevRecords,
+			{
+				account_category: '',
+				account_product: '',
+				account_product_value: '',
+			},
+		]);
+	};
+
+	const handleDeleteRecord = (index: number) => {
+		const updatedRecords = [...records];
+		updatedRecords.splice(index, 1);
+		setRecords(updatedRecords);
 	};
 
 	const handleInsertData = (event: React.FormEvent) => {
-		event.preventDefault(); // Impede o comportamento padrão do formulário
+		event.preventDefault();
 		setLoading(true);
 
-		const { user_email, user_password } = formData;
-		if (user_email === '' || user_password === '') {
-			setLoading(false);
-			setErrorLogin('Fill in all fields to log in!');
-			return;
-		} else {
-			setErrorLogin('');
-		}
-
-		const hashedPassword = sha256(user_password);
-
 		const formDataWithHash = {
-			user_email,
-			user_password: hashedPassword,
-			account_product: formData.account_product,
-			account_product_value: formData.account_product_value,
+			account_data: records,
 		};
-
-		fetch('http://localhost:5000/login', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(formDataWithHash),
-		})
-			.then((response) => {
-				if (!response.ok) {
-					setLoading(false);
-					setErrorLogin('The provided credentials are invalid!');
-					throw new Error('Error logging in');
-				} else {
-					window.location.href = '/home';
-				}
-			})
-			.catch((error) => {
-				setLoading(false);
-				console.error('Error:', error);
-				throw new Error('Error connecting');
-			});
+		console.log(formDataWithHash);
 	};
 
 	return (
@@ -109,51 +95,66 @@ const DebtManagementForm = () => {
 						justifyContent={'space-between'}
 					>
 						<Typography variant='h4'>Accounts Payable</Typography>
-						<AddIcon color='primary' />
+						<AddIcon color='primary' onClick={addedRegisterAccountPayable} />
 					</Box>
 
-					<Box
-						display={'flex'}
-						alignItems={'center'}
-						justifyContent={'space-between'}
-						gap={'4px'}
-						sx={{ width: '100%' }}
-					>
-						<FormControl fullWidth>
-							<InputLabel id='account_category-label'>
-								Category
-							</InputLabel>
-							<Select
-								labelId='account_category-label'
-								id='account_category'
-								value={selectedCategory}
-								label='Category'
-								onChange={handleChangeSelectCategory}
-							>
-								<MenuItem value={10}>Ten</MenuItem>
-								<MenuItem value={20}>Twenty</MenuItem>
-								<MenuItem value={30}>Thirty</MenuItem>
-							</Select>
-						</FormControl>
+					{records.map((record, index) => (
+						<Box
+							key={index}
+							display={'flex'}
+							alignItems={'center'}
+							justifyContent={'space-between'}
+							gap={'4px'}
+							sx={{ width: '100%' }}
+							id='form-box'
+						>
+							<FormControl fullWidth>
+								<InputLabel id={`account_category-label-${index}`}>
+									Category
+								</InputLabel>
+								<Select
+									labelId={`account_category-label-${index}`}
+									id={`account_category-${index}`}
+									value={record.account_category}
+									label='Category'
+									onChange={(e: SelectChangeEvent<string>) =>
+										handleInputChange(e, index)
+									}
+									name='account_category'
+								>
+									<MenuItem value=''>Select an option</MenuItem>
+									<MenuItem value='Mercado'>Mercado</MenuItem>
+									<MenuItem value='Casa'>Casa</MenuItem>
+									<MenuItem value='Pets'>Pets</MenuItem>
+								</Select>
+							</FormControl>
 
-						<TextField
-							id='account_product'
-							name='account_product'
-							label='Product'
-							variant='outlined'
-							value={formData.account_product}
-							onChange={handleInputChange}
-						/>
-						<TextField
-							id='account_product_value'
-							name='account_product_value'
-							label='Product Value'
-							variant='outlined'
-							value={formData.account_product_value}
-							onChange={handleInputChange}
-						/>
-						<DeleteIcon color='error' />
-					</Box>
+							<TextField
+								id={`account_product-${index}`}
+								name='account_product'
+								label='Product'
+								variant='outlined'
+								value={record.account_product}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									handleInputChange(e, index)
+								}
+							/>
+							<TextField
+								id={`account_product_value-${index}`}
+								name='account_product_value'
+								label='Product Value'
+								variant='outlined'
+								value={record.account_product_value}
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									handleInputChange(e, index)
+								}
+							/>
+							<DeleteIcon
+								color='error'
+								onClick={() => handleDeleteRecord(index)}
+							/>
+						</Box>
+					))}
 					<Box>
 						<Typography variant='caption' color='red'>
 							{errorLogin}
