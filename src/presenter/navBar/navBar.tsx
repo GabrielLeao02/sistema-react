@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from 'styled-components';
+import { ThemeProvider, useTheme } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const NavBarStyled = styled.div`
 	box-sizing: border-box;
@@ -26,9 +28,11 @@ const NavBarStyled = styled.div`
 
 const pages = ['Contact', 'Products'];
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Logout'];
 
 const NavBar: React.VFC = () => {
+	const theme = useTheme();
+	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
 		null
 	);
@@ -51,139 +55,122 @@ const NavBar: React.VFC = () => {
 		setAnchorElUser(null);
 	};
 
-	return (
-		<NavBarStyled>
-			<AppBar position='static'>
-				<Container maxWidth='xl'>
-					<Toolbar disableGutters>
-						<Typography
-							variant='h6'
-							noWrap
-							component='a'
-							href='/home'
-							sx={{
-								fontFamily: 'monospace',
-								fontWeight: 700,
-								letterSpacing: '.3rem',
-								color: 'inherit',
-								textDecoration: 'none',
-							}}
-						>
-							LOGO
-						</Typography>
+	const handleLogout = () => {
+		navigate('/accounts/');
+	};
 
-						<Box
-							sx={{
-								flexGrow: 1,
-								display: { xs: 'flex', md: 'none' },
-							}}
-						>
-							<IconButton
-								size='large'
-								aria-label='account of current user'
-								aria-controls='menu-appbar'
-								aria-haspopup='true'
-								onClick={handleOpenNavMenu}
-								color='inherit'
-							>
-								<MenuIcon />
-							</IconButton>
-							<Menu
-								id='menu-appbar'
-								anchorEl={anchorElNav}
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'left',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'left',
-								}}
-								open={Boolean(anchorElNav)}
-								onClose={handleCloseNavMenu}
+	return (
+		<ThemeProvider theme={theme}>
+			<NavBarStyled>
+				<AppBar position='static'>
+					<Container maxWidth='xl'>
+						<Toolbar disableGutters>
+							<Typography
+								variant='h6'
+								noWrap
+								component='a'
+								href='/home'
 								sx={{
-									display: { xs: 'block', md: 'none' },
+									fontFamily: 'monospace',
+									fontWeight: 700,
+									letterSpacing: '.3rem',
+									color: 'inherit',
+									textDecoration: 'none',
+								}}
+							>
+								LOGO
+							</Typography>
+
+							<Box
+								sx={{
+									flexGrow: 1,
+									display: { xs: 'flex', md: 'none' },
+								}}
+							>
+								<IconButton
+									size='large'
+									aria-label='account of current user'
+									aria-controls='menu-appbar'
+									aria-haspopup='true'
+									onClick={handleOpenNavMenu}
+									color='inherit'
+								>
+									<MenuIcon />
+								</IconButton>
+								<Menu
+									id='menu-appbar'
+									anchorEl={anchorElNav}
+									anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'left',
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'left',
+									}}
+									open={Boolean(anchorElNav)}
+									onClose={handleCloseNavMenu}
+									sx={{
+										display: { xs: 'block', md: 'none' },
+									}}
+								>
+									{pages.map((page) => (
+										<MenuItem
+											key={page}
+											onClick={() =>
+												handleCloseNavMenu(page)
+											}
+										>
+											<Typography textAlign='center'>
+												{page}
+											</Typography>
+										</MenuItem>
+									))}
+								</Menu>
+							</Box>
+
+							<Box
+								sx={{
+									flexGrow: 1,
+									display: { xs: 'none', md: 'flex' },
 								}}
 							>
 								{pages.map((page) => (
-									<MenuItem
+									<Button
 										key={page}
 										onClick={() => handleCloseNavMenu(page)}
+										sx={{
+											my: 2,
+											color: 'white',
+											display: 'block',
+										}}
 									>
-										<Typography textAlign='center'>
-											{page}
-										</Typography>
-									</MenuItem>
+										{page}
+									</Button>
 								))}
-							</Menu>
-						</Box>
+							</Box>
 
-						<Box
-							sx={{
-								flexGrow: 1,
-								display: { xs: 'none', md: 'flex' },
-							}}
-						>
-							{pages.map((page) => (
+							<Box sx={{ flexGrow: 0 }}>
 								<Button
-									key={page}
-									onClick={() => handleCloseNavMenu(page)}
-									sx={{
-										my: 2,
-										color: 'white',
-										display: 'block',
+									variant='contained'
+									style={{
+										cursor: 'pointer',
+										background:
+											theme.typography.button.color,
+										color: theme.palette.primary.main,
+										width: '100%',
 									}}
+									onClick={handleLogout}
 								>
-									{page}
+									Logout
 								</Button>
-							))}
-						</Box>
-
-						<Box sx={{ flexGrow: 0 }}>
-							<Tooltip title='Open settings'>
-								<IconButton
-									onClick={handleOpenUserMenu}
-									sx={{ p: 0 }}
-								>
-									<Avatar
-										alt='Remy Sharp'
-										src='#'
-									/>
-								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{ mt: '45px' }}
-								id='menu-appbar'
-								anchorEl={anchorElUser}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={Boolean(anchorElUser)}
-								onClose={handleCloseUserMenu}
-							>
-								{settings.map((setting) => (
-									<MenuItem
-										key={setting}
-										onClick={handleCloseUserMenu}
-									>
-										<Typography textAlign='center'>
-											{setting}
-										</Typography>
-									</MenuItem>
-								))}
-							</Menu>
-						</Box>
-					</Toolbar>
-				</Container>
-			</AppBar>
-		</NavBarStyled>
+							</Box>
+						</Toolbar>
+					</Container>
+				</AppBar>
+			</NavBarStyled>
+		</ThemeProvider>
 	);
 };
 
