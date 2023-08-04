@@ -56,6 +56,8 @@ type Record = {
 
 const DebtManagementForm = () => {
 	const theme = useTheme();
+
+	const [success, setSuccess] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [errorLogin, setErrorLogin] = useState('');
 
@@ -118,8 +120,26 @@ const DebtManagementForm = () => {
 			.then((response) => {
 				if (!response.ok) {
 					setLoading(false);
-					setErrorLogin('The provided credentials are invalid!');
+					setErrorLogin(
+						'Failed to insert Accounts Payable data! report all fields'
+					);
 					throw new Error('Error logging in');
+				} else {
+					setSuccess('green');
+					setErrorLogin(
+						'Accounts Payable data inserted successfully!'
+					);
+					setLoading(false);
+					setTimeout(() => {
+						setRecords([
+							{
+								account_category: '',
+								account_product: '',
+								account_product_value: '',
+							},
+						]);
+						setErrorLogin('');
+					}, 2000);
 				}
 				return response.json();
 			})
@@ -191,18 +211,21 @@ const DebtManagementForm = () => {
 								alignItems={'center'}
 								justifyContent={'space-between'}
 								gap={'4px'}
-								sx={{ width: '100%', borderBottom: {
-									xs: '1px solid #fcc116',
-									sm: '1px solid transparent',
-								},}}
-								
+								sx={{
+									width: '100%',
+									borderBottom: {
+										xs: '1px solid #fcc116',
+										sm: 'none',
+									},
+									padding: { xs: '20px 0px', md: '0px 0px' },
+								}}
 								id='form-box'
 							>
 								<Box
 									display={'flex'}
 									alignItems={'center'}
 									justifyContent={'space-between'}
-									gap={'4px'}
+									gap={'10px'}
 									sx={{
 										width: '100%',
 										flexDirection: {
@@ -354,8 +377,6 @@ const DebtManagementForm = () => {
 												lg: '50%',
 												xl: '50%',
 											},
-											
-											paddingBottom: { xs: '10px' },
 										}}
 									/>
 								</Box>
@@ -369,7 +390,11 @@ const DebtManagementForm = () => {
 					</Box>
 
 					<Box>
-						<Typography variant='caption' color='red'>
+						<Typography
+							style={{ fontSize: '14px' }}
+							variant='caption'
+							color={success}
+						>
 							{errorLogin}
 						</Typography>
 					</Box>
