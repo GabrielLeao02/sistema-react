@@ -191,131 +191,174 @@ const DebtManagementForm = () => {
 								alignItems={'center'}
 								justifyContent={'space-between'}
 								gap={'4px'}
-								sx={{ width: '100%' }}
+								sx={{ width: '100%', borderBottom: {
+									xs: '1px solid #fcc116',
+									sm: '1px solid transparent',
+								},}}
+								
 								id='form-box'
 							>
-								<FormControl
-									fullWidth
+								<Box
+									display={'flex'}
+									alignItems={'center'}
+									justifyContent={'space-between'}
+									gap={'4px'}
 									sx={{
-										width: {
-											xs: '100%',
-											sm: '100%',
-											md: '70%',
-											lg: '50%',
-											xl: '50%',
+										width: '100%',
+										flexDirection: {
+											xs: 'column',
+											md: 'row',
 										},
-										display: 'flex',
-										flexDirection: 'column',
-										margin: '4px',
 									}}
 								>
-									<InputLabel
-										id={`account_category-label-${index}`}
-										style={{
-											color: theme.palette.primary.light,
+									<FormControl
+										fullWidth
+										sx={{
+											width: {
+												xs: '100%',
+												sm: '100%',
+												md: '70%',
+												lg: '50%',
+												xl: '50%',
+											},
+											display: 'flex',
+											flexDirection: 'column',
+											margin: '4px',
 										}}
 									>
-										Category
-									</InputLabel>
-									<Select
-										labelId={`account_category-label-${index}`}
-										id={`account_category-${index}`}
-										value={record.account_category}
-										label='Category'
-										onChange={(
-											e: SelectChangeEvent<string>
-										) => handleInputChange(e, index)}
-										name='account_category'
-									>
-										<MenuItem
+										<InputLabel
+											id={`account_category-label-${index}`}
 											style={{
-												color: theme.palette.secondary
-													.main,
+												color: theme.palette.primary
+													.light,
 											}}
-											value=''
 										>
-											Select an option
-										</MenuItem>
-										<MenuItem
-											style={{
-												color: theme.palette.secondary
-													.main,
-											}}
-											value='Mercado'
+											Category
+										</InputLabel>
+										<Select
+											labelId={`account_category-label-${index}`}
+											id={`account_category-${index}`}
+											value={record.account_category}
+											label='Category'
+											onChange={(
+												e: SelectChangeEvent<string>
+											) => handleInputChange(e, index)}
+											name='account_category'
 										>
-											Mercado
-										</MenuItem>
-										<MenuItem
-											style={{
-												color: theme.palette.secondary
-													.main,
-											}}
-											value='Casa'
-										>
-											Casa
-										</MenuItem>
-										<MenuItem
-											style={{
-												color: theme.palette.secondary
-													.main,
-											}}
-											value='Pets'
-										>
-											Pets
-										</MenuItem>
-									</Select>
-								</FormControl>
+											<MenuItem
+												style={{
+													color: theme.palette
+														.secondary.main,
+												}}
+												value=''
+											>
+												Select an option
+											</MenuItem>
+											<MenuItem
+												style={{
+													color: theme.palette
+														.secondary.main,
+												}}
+												value='Mercado'
+											>
+												Mercado
+											</MenuItem>
+											<MenuItem
+												style={{
+													color: theme.palette
+														.secondary.main,
+												}}
+												value='Casa'
+											>
+												Casa
+											</MenuItem>
+											<MenuItem
+												style={{
+													color: theme.palette
+														.secondary.main,
+												}}
+												value='Pets'
+											>
+												Pets
+											</MenuItem>
+										</Select>
+									</FormControl>
 
-								<TextField
-									id={`account_product-${index}`}
-									name='account_product'
-									label='Product'
-									variant='outlined'
-									value={record.account_product}
-									onChange={(
-										e: React.ChangeEvent<HTMLInputElement>
-									) => handleInputChange(e, index)}
-									InputLabelProps={{
-										style: {
-											color: theme.palette.primary.light,
-											borderColor:
-												theme.palette.primary.light,
-										},
-										// Cor do texto do label
-									}}
-									InputProps={{
-										style: {
-											color: theme.palette.primary.light,
-											borderColor:
-												theme.palette.primary.light,
-										}, // Cor do texto e da borda do input
-									}}
-								/>
-								<TextField
-									id={`account_product_value-${index}`}
-									name='account_product_value'
-									label='Product Value $'
-									variant='outlined'
-									value={record.account_product_value}
-									onChange={(
-										e: React.ChangeEvent<HTMLInputElement>
-									) => handleInputChange(e, index)}
-									InputLabelProps={{
-										style: {
-											color: theme.palette.primary.light,
-											borderColor:
-												theme.palette.primary.light,
-										},
-										// Cor do texto do label
-									}}
-									InputProps={{
-										style: {
-											color: theme.palette.primary.light,
-											borderColor:
-												theme.palette.primary.light,
-										}, // Cor do texto e da borda do input
-									}}
-								/>
+									<TextField
+										id={`account_product-${index}`}
+										name='account_product'
+										label='Product'
+										variant='outlined'
+										value={record.account_product}
+										onChange={(
+											e: React.ChangeEvent<HTMLInputElement>
+										) => handleInputChange(e, index)}
+										InputLabelProps={{
+											style: {
+												color: theme.palette.primary
+													.light,
+												borderColor:
+													theme.palette.primary.light,
+											},
+											// Cor do texto do label
+										}}
+										InputProps={{
+											style: {
+												color: theme.palette.primary
+													.light,
+												borderColor:
+													theme.palette.primary.light,
+											}, // Cor do texto e da borda do input
+										}}
+										sx={{
+											width: {
+												xs: '100%',
+												sm: '100%',
+												md: '70%',
+												lg: '50%',
+												xl: '50%',
+											},
+										}}
+									/>
+									<TextField
+										id={`account_product_value-${index}`}
+										name='account_product_value'
+										label='Product Value $'
+										variant='outlined'
+										value={record.account_product_value}
+										onChange={(
+											e: React.ChangeEvent<HTMLInputElement>
+										) => handleInputChange(e, index)}
+										InputLabelProps={{
+											style: {
+												color: theme.palette.primary
+													.light,
+												borderColor:
+													theme.palette.primary.light,
+											},
+											// Cor do texto do label
+										}}
+										InputProps={{
+											style: {
+												color: theme.palette.primary
+													.light,
+												borderColor:
+													theme.palette.primary.light,
+											}, // Cor do texto e da borda do input
+										}}
+										sx={{
+											width: {
+												xs: '100%',
+												sm: '100%',
+												md: '70%',
+												lg: '50%',
+												xl: '50%',
+											},
+											
+											paddingBottom: { xs: '10px' },
+										}}
+									/>
+								</Box>
 								<RemoveIconWrapper
 									color='error'
 									onClick={() => handleDeleteRecord(index)}
@@ -324,6 +367,7 @@ const DebtManagementForm = () => {
 							</Box>
 						))}
 					</Box>
+
 					<Box>
 						<Typography variant='caption' color='red'>
 							{errorLogin}
