@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { ChangeEvent, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components';
+import axios from 'axios';
+
 import {
 	SelectChangeEvent,
 	Button,
@@ -23,7 +26,6 @@ const FormStyled = styled.div`
 	flex-direction: column;
 	width: 100%;
 	gap: 8px;
-
 `;
 
 const AddIconWrapper = styled(AddIcon)`
@@ -100,13 +102,35 @@ const DebtManagementForm = () => {
 		setRecords(updatedRecords);
 	};
 
-	const handleInsertData = (event: React.FormEvent) => {
+	// eslint-disable-next-line @typescript-eslint/require-await
+	const handleInsertData = async (event: React.FormEvent) => {
 		event.preventDefault();
 		setLoading(true);
-
 		const formDataWithHash = {
 			account_data: records,
 		};
+
+		fetch('https://gabrielleaotech.com/sistema/accounts/account.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(records),
+		})
+			.then((response) => {
+				if (!response.ok) {
+					setLoading(false);
+					setErrorLogin('The provided credentials are invalid!');
+					throw new Error('Error logging in');
+				}
+				return response.json();
+			})
+
+			.catch((error) => {
+				// Lide com quaisquer erros que ocorram na chamada fetch ou no processamento da resposta
+				console.error('Erro ao fazer login:', error);
+			});
+
 		console.log(formDataWithHash);
 		setErrorLogin('');
 	};
@@ -124,7 +148,7 @@ const DebtManagementForm = () => {
 					},
 				}}
 			>
-				<FormStyled >
+				<FormStyled>
 					<Box
 						display={'flex'}
 						alignItems={'center'}
@@ -139,128 +163,169 @@ const DebtManagementForm = () => {
 							style={{ cursor: 'pointer' }}
 						/>
 					</Box>
-
-					{records.map((record, index) => (
-						<Box
-							key={index}
-							display={'flex'}
-							alignItems={'center'}
-							justifyContent={'space-between'}
-							gap={'4px'}
-							sx={{ width: '100%' }}
-							id='form-box'
-						>
-							<FormControl fullWidth sx={{ width: { xs: "100%", sm: "100%", md: "70%", lg: "50%", xl: "50%" }, display: 'flex', flexDirection: 'column', }} >
-								<InputLabel
-									id={`account_category-label-${index}`}
-									style={{
-										color: theme.palette.primary.light,
+					<Box
+						sx={{
+							display: 'felx',
+							flexDirection: 'column',
+							gap: '4px',
+							maxHeight: 'calc( 55vh - 10px )',
+							overflow: 'auto',
+							paddingTop: '10px',
+							paddingRight: '10px',
+							scrollbarWidth: 'thin', // Largura da barra de rolagem (pode ser 'auto', 'thin' ou 'none')
+							scrollbarColor: 'rebeccapurple green', // Cor da barra de rolagem (somente no Firefox)
+							'&::-webkit-scrollbar': {
+								width: '8px', // Largura da barra de rolagem (somente no WebKit)
+							},
+							'&::-webkit-scrollbar-thumb': {
+								background: '#676664', // Cor da barra de rolagem (somente no WebKit)
+								borderRadius: '8px', // Raio da borda do polegar da barra de rolagem (somente no WebKit)
+							},
+							'&::-webkit-scrollbar-thumb:hover': {
+								background: '#fcc116', // Cor do polegar da barra de rolagem ao passar o mouse (somente no WebKit)
+							},
+						}}
+					>
+						{records.map((record, index) => (
+							<Box
+								key={index}
+								display={'flex'}
+								alignItems={'center'}
+								justifyContent={'space-between'}
+								gap={'4px'}
+								sx={{ width: '100%' }}
+								id='form-box'
+							>
+								<FormControl
+									fullWidth
+									sx={{
+										width: {
+											xs: '100%',
+											sm: '100%',
+											md: '70%',
+											lg: '50%',
+											xl: '50%',
+										},
+										display: 'flex',
+										flexDirection: 'column',
+										margin: '4px',
 									}}
 								>
-									Category
-								</InputLabel>
-								<Select
-									labelId={`account_category-label-${index}`}
-									id={`account_category-${index}`}
-									value={record.account_category}
-									label='Category'
-									onChange={(e: SelectChangeEvent<string>) =>
-										handleInputChange(e, index)
-									}
-									name='account_category'
-								>
-									<MenuItem
+									<InputLabel
+										id={`account_category-label-${index}`}
 										style={{
-											color: theme.palette.secondary.main,
+											color: theme.palette.primary.light,
 										}}
-										value=''
 									>
-										Select an option
-									</MenuItem>
-									<MenuItem
-										style={{
-											color: theme.palette.secondary.main,
-										}}
-										value='Mercado'
+										Category
+									</InputLabel>
+									<Select
+										labelId={`account_category-label-${index}`}
+										id={`account_category-${index}`}
+										value={record.account_category}
+										label='Category'
+										onChange={(
+											e: SelectChangeEvent<string>
+										) => handleInputChange(e, index)}
+										name='account_category'
 									>
-										Mercado
-									</MenuItem>
-									<MenuItem
-										style={{
-											color: theme.palette.secondary.main,
-										}}
-										value='Casa'
-									>
-										Casa
-									</MenuItem>
-									<MenuItem
-										style={{
-											color: theme.palette.secondary.main,
-										}}
-										value='Pets'
-									>
-										Pets
-									</MenuItem>
-								</Select>
-							</FormControl>
+										<MenuItem
+											style={{
+												color: theme.palette.secondary
+													.main,
+											}}
+											value=''
+										>
+											Select an option
+										</MenuItem>
+										<MenuItem
+											style={{
+												color: theme.palette.secondary
+													.main,
+											}}
+											value='Mercado'
+										>
+											Mercado
+										</MenuItem>
+										<MenuItem
+											style={{
+												color: theme.palette.secondary
+													.main,
+											}}
+											value='Casa'
+										>
+											Casa
+										</MenuItem>
+										<MenuItem
+											style={{
+												color: theme.palette.secondary
+													.main,
+											}}
+											value='Pets'
+										>
+											Pets
+										</MenuItem>
+									</Select>
+								</FormControl>
 
-							<TextField
-								id={`account_product-${index}`}
-								name='account_product'
-								label='Product'
-								variant='outlined'
-								value={record.account_product}
-								onChange={(
-									e: React.ChangeEvent<HTMLInputElement>
-								) => handleInputChange(e, index)}
-								InputLabelProps={{
-									style: {
-										color: theme.palette.primary.light,
-										borderColor:
-											theme.palette.primary.light,
-									},
-									// Cor do texto do label
-								}}
-								InputProps={{
-									style: {
-										color: theme.palette.primary.light,
-										borderColor:
-											theme.palette.primary.light,
-									}, // Cor do texto e da borda do input
-								}}
-							/>
-							<TextField
-								id={`account_product_value-${index}`}
-								name='account_product_value'
-								label='Product Value'
-								variant='outlined'
-								value={record.account_product_value}
-								onChange={(
-									e: React.ChangeEvent<HTMLInputElement>
-								) => handleInputChange(e, index)}
-								InputLabelProps={{
-									style: {
-										color: theme.palette.primary.light,
-										borderColor:
-											theme.palette.primary.light,
-									},
-									// Cor do texto do label
-								}}
-								InputProps={{
-									style: {
-										color: theme.palette.primary.light,
-										borderColor:
-											theme.palette.primary.light,
-									}, // Cor do texto e da borda do input
-								}}
-							/>
-							<RemoveIconWrapper
-								color='error'
-								onClick={() => handleDeleteRecord(index)}
-								style={{ cursor: 'pointer' }}
-							/>
-						</Box>
-					))}
+								<TextField
+									id={`account_product-${index}`}
+									name='account_product'
+									label='Product'
+									variant='outlined'
+									value={record.account_product}
+									onChange={(
+										e: React.ChangeEvent<HTMLInputElement>
+									) => handleInputChange(e, index)}
+									InputLabelProps={{
+										style: {
+											color: theme.palette.primary.light,
+											borderColor:
+												theme.palette.primary.light,
+										},
+										// Cor do texto do label
+									}}
+									InputProps={{
+										style: {
+											color: theme.palette.primary.light,
+											borderColor:
+												theme.palette.primary.light,
+										}, // Cor do texto e da borda do input
+									}}
+								/>
+								<TextField
+									id={`account_product_value-${index}`}
+									name='account_product_value'
+									label='Product Value $'
+									variant='outlined'
+									value={record.account_product_value}
+									onChange={(
+										e: React.ChangeEvent<HTMLInputElement>
+									) => handleInputChange(e, index)}
+									InputLabelProps={{
+										style: {
+											color: theme.palette.primary.light,
+											borderColor:
+												theme.palette.primary.light,
+										},
+										// Cor do texto do label
+									}}
+									InputProps={{
+										style: {
+											color: theme.palette.primary.light,
+											borderColor:
+												theme.palette.primary.light,
+										}, // Cor do texto e da borda do input
+									}}
+								/>
+								<RemoveIconWrapper
+									color='error'
+									onClick={() => handleDeleteRecord(index)}
+									style={{ cursor: 'pointer' }}
+								/>
+							</Box>
+						))}
+					</Box>
 					<Box>
 						<Typography variant='caption' color='red'>
 							{errorLogin}
@@ -278,10 +343,10 @@ const DebtManagementForm = () => {
 						{loading ? 'Loading...' : 'Insert Data'}
 					</Button>
 					<Button variant='outlined' style={{ cursor: 'pointer' }}>
-						{loading ? 'Loading...' : 'Remove all Data'}
+						Remove all Data
 					</Button>
 				</FormStyled>
-			</ThemeProvider >
+			</ThemeProvider>
 		</>
 	);
 };

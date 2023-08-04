@@ -22,10 +22,11 @@ const StyledContainer = styled.div<ContainerProps>`
 	padding: 20px;
 	box-shadow: ${({ theme }) => theme.shadows[4]};
 	height: fit-content;
-	
+	max-height: 80vh;
+
 	@media (max-width: 600px) {
 		width: 100%;
-		padding: 40px 10px
+		padding: 40px 10px;
 	}
 `;
 
