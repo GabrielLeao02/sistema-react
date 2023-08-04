@@ -110,7 +110,7 @@ function UserForm({ setShowButton }: FormLoginProps) {
 			if (!response.ok) {
 				return setRegistrationError('Error saving form data');
 			} else {
-				navigate('/accounts/home');
+				navigate('/home');
 			}
 
 			console.log(await response.json());

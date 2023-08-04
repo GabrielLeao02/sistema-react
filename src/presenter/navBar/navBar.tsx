@@ -42,7 +42,7 @@ const NavBar: React.VFC = () => {
 	};
 
 	const handleLogout = () => {
-		navigate('/accounts/');
+		navigate('/');
 	};
 
 	return (

@@ -22,6 +22,11 @@ const StyledContainer = styled.div<ContainerProps>`
 	padding: 20px;
 	box-shadow: ${({ theme }) => theme.shadows[4]};
 	height: fit-content;
+	
+	@media (max-width: 600px) {
+		width: 100%;
+		padding: 40px 10px
+	}
 `;
 
 interface StyledContainerWrapperProps {

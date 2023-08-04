@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import StyledContainer from '../containerGlobal/StyledContainer';
 
 const RegisterStyles = styled.div`
-	background-image: url('https://gabrielleaotech.com/accounts/image/office.jpg');
+	background-image: url('https://gabrielleaotech.com/image/office.jpg');
 	background-size: cover;
 	width: 100vw;
 	height: 100vh;
@@ -17,6 +17,10 @@ const RegisterStyles = styled.div`
 	align-items: start;
 	padding: 30px;
 	box-sizing: border-box;
+
+	@media (max-width: 600px) {
+		padding: 10px;
+	}
 `;
 
 function Register() {

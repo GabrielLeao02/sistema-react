@@ -107,7 +107,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 				setErrorLogin('The provided credentials are invalid!');
 				throw new Error('Error logging in');
 			} else {
-				navigate('/accounts/home');
+				navigate('/home');
 			}
 		} catch (error) {
 			throw new Error('Error connecting');

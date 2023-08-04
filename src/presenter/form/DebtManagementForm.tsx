@@ -15,6 +15,7 @@ import {
 	useTheme,
 	ThemeProvider,
 } from '@mui/material';
+import { width } from '@mui/system';
 
 const FormStyled = styled.div`
 	box-sizing: border-box;
@@ -22,6 +23,7 @@ const FormStyled = styled.div`
 	flex-direction: column;
 	width: 100%;
 	gap: 8px;
+
 `;
 
 const AddIconWrapper = styled(AddIcon)`
@@ -122,7 +124,7 @@ const DebtManagementForm = () => {
 					},
 				}}
 			>
-				<FormStyled>
+				<FormStyled >
 					<Box
 						display={'flex'}
 						alignItems={'center'}
@@ -148,7 +150,7 @@ const DebtManagementForm = () => {
 							sx={{ width: '100%' }}
 							id='form-box'
 						>
-							<FormControl fullWidth>
+							<FormControl fullWidth sx={{ width: { xs: "100%", sm: "100%", md: "70%", lg: "50%", xl: "50%" }, display: 'flex', flexDirection: 'column', }} >
 								<InputLabel
 									id={`account_category-label-${index}`}
 									style={{
@@ -279,7 +281,7 @@ const DebtManagementForm = () => {
 						{loading ? 'Loading...' : 'Remove all Data'}
 					</Button>
 				</FormStyled>
-			</ThemeProvider>
+			</ThemeProvider >
 		</>
 	);
 };

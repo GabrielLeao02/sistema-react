@@ -65,9 +65,9 @@ function App() {
 			<GlobalContainer>
 				<BrowserRouter>
 					<Routes>
-						<Route path='accounts/' element={<Register />} />
+						<Route path='/' element={<Register />} />
 						<Route
-							path='accounts/home'
+							path='/home'
 							element={
 								<>
 									<NavBar />
@@ -78,7 +78,7 @@ function App() {
 							}
 						/>
 						<Route
-							path='accounts/register'
+							path='/register'
 							element={<Register />}
 						/>
 					</Routes>
