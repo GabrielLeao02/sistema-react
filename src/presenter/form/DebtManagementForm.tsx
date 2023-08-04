@@ -183,7 +183,7 @@ const DebtManagementForm = () => {
 					</Box>
 					<Box
 						sx={{
-							display: 'felx',
+							display: 'flex',
 							flexDirection: 'column',
 							gap: '4px',
 							maxHeight: 'calc( 55vh - 10px )',
