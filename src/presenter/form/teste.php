@@ -3,7 +3,7 @@ header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
 
-function accounts()
+function login_usuario()
 {
   try {
     include("../conexao/conexao.php");
@@ -13,40 +13,36 @@ function accounts()
     $request = $_REQUEST;
     $_POST = array_merge($getJson, $request);
 
-    if ($conn->connect_error) {
-      die("Falha na conexão: " . $conn->connect_error);
-    }
+    $usuario_email = $_POST['user_email'];
+    $senha_criptografada_frontend = $_POST['user_password'];
 
+    $comando = "SELECT usuario_senha FROM sys_usuarios WHERE usuario_email = ?";
 
-    $data = $_POST;
-    $insertedRows = 0;
+    $stmt = $con->prepare($comando);
+    $stmt->bind_param("s", $usuario_email);
+    $stmt->execute();
+    $stmt->bind_result($senha_salgada_bd);
+    $stmt->fetch();
+    $stmt->close();
 
-    foreach ($data as $item) {
-      $account_category = $item["account_category"];
-      $account_product = $item["account_product"];
-      $account_product_value = $item["account_product_value"];
+    if ($senha_salgada_bd !== null) {
+      if (password_verify($senha_criptografada_frontend, $senha_salgada_bd)) {
 
-
-      $stmt = $conn->prepare("INSERT INTO Accounts (account_category, account_product, account_product_value) VALUES (?, ?, ?)");
-
-
-      $stmt->bind_param("sss", $account_category, $account_product, $account_product_value);
-
-
-      $stmt->execute();
-      if ($stmt->execute()) {
-        $insertedRows++;
+        http_response_code(200);
+        exit;
+      } else {
+        http_response_code(401);
+        exit;
       }
-    }
-    if ($insertedRows > 0) {
-      echo "Dados inseridos no banco de dados com sucesso!";
     } else {
-      echo "Nenhum dado foi inserido no banco de dados.";
+      http_response_code(401);
+      exit;
     }
-    echo "Dados inseridos no banco de dados com sucesso!";
+
+    $con->close();
   } catch (Exception $e) {
     echo json_encode(['error' => strval($e)]), 500;
   }
 }
 
-accounts();
+login_usuario();

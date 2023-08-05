@@ -96,7 +96,7 @@ function UserForm({ setShowButton }: FormLoginProps) {
 			// Hash the password using SHA-256
 			const hashedPassword = sha256(user_password);
 			formData.user_password = hashedPassword;
-			const response = await fetch(
+			fetch(
 				'https://gabrielleaotech.com/sistema/user/register.php',
 				{
 					method: 'POST',
@@ -105,22 +105,19 @@ function UserForm({ setShowButton }: FormLoginProps) {
 					},
 					body: JSON.stringify(formData),
 				}
-			);
-
-			if (!response.ok) {
-				return setRegistrationError('Error saving form data');
-			} else {
+			).then(() => {
+				setFormData({
+					user_name: '',
+					user_cpf: '',
+					user_email: '',
+					user_password: '',
+				});
 				navigate('/home');
-			}
+			}).catch(() => {
+				return setRegistrationError('Error saving form data');
+			})
 
-			console.log(await response.json());
-			// Optionally, you can reset the form fields here
-			setFormData({
-				user_name: '',
-				user_cpf: '',
-				user_email: '',
-				user_password: '',
-			});
+
 		} catch (error) {
 			console.error(error);
 		}

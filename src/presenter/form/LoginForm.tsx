@@ -90,28 +90,25 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 			user_password: hashedPassword,
 		};
 
-		try {
-			const response = await fetch(
-				'https://gabrielleaotech.com/sistema/user/login.php',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(formDataWithHash),
-				}
-			);
 
-			if (!response.ok) {
-				setLoading(false);
-				setErrorLogin('The provided credentials are invalid!');
-				throw new Error('Error logging in');
-			} else {
-				navigate('/home');
+		fetch(
+			'https://gabrielleaotech.com/sistema/user/login.php',
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formDataWithHash),
 			}
-		} catch (error) {
-			throw new Error('Error connecting');
-		}
+		).then(() => {
+			navigate('/home');
+		}).catch(() => {
+			setLoading(false);
+			setErrorLogin('The provided credentials are invalid!');
+			throw new Error('Error logging in');
+		})
+
+
 	};
 
 	return (
