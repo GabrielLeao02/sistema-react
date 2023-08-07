@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import {
 	Box,
 	Typography,
@@ -7,7 +7,7 @@ import {
 	Button,
 } from '@mui/material';
 import styled from 'styled-components';
-import { isCPF } from 'brazilian-values';
+import { isCPF, formatToCPF } from 'brazilian-values';
 import sha256 from 'sha256';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,7 +63,24 @@ function UserForm({ setShowButton }: FormLoginProps) {
 		void handleSubmit();
 	};
 
-	const handleSubmit = async () => {
+	const formatCPf = (e: KeyboardEvent<HTMLInputElement>) => {
+		const inputElement = e.target as HTMLInputElement;
+
+		const cpf = inputElement.value;
+		if (!isCPF(cpf)) {
+			setIsCpf(true);
+			setCpfErrorText('Invalid CPF!');
+			return;
+		} else {
+			setIsCpf(false);
+			setCpfErrorText('');
+		}
+		const cpfFormatado = formatToCPF(cpf);
+
+		setFormData((prevData) => ({ ...prevData, user_cpf: cpfFormatado }));
+	};
+
+	const handleSubmit = () => {
 		for (const fieldName in formData) {
 			const fieldValue = formData[fieldName as keyof typeof formData];
 			if (fieldValue === '') {
@@ -73,16 +90,9 @@ function UserForm({ setShowButton }: FormLoginProps) {
 			}
 		}
 		try {
-			const { user_cpf, user_email, user_password } = formData;
+			formData.user_cpf = formData.user_cpf.replace(/\D/g, '');
 
-			if (!isCPF(user_cpf)) {
-				setIsCpf(true);
-				setCpfErrorText('Invalid CPF!');
-				return;
-			} else {
-				setIsCpf(false);
-				setCpfErrorText('');
-			}
+			const { user_email, user_password } = formData;
 
 			if (!isEmailValid(user_email)) {
 				setEmailError(true);
@@ -93,31 +103,27 @@ function UserForm({ setShowButton }: FormLoginProps) {
 				setEmailErrorText('');
 			}
 
-			// Hash the password using SHA-256
 			const hashedPassword = sha256(user_password);
 			formData.user_password = hashedPassword;
-			fetch(
-				'https://gabrielleaotech.com/sistema/user/register.php',
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(formData),
-				}
-			).then(() => {
-				setFormData({
-					user_name: '',
-					user_cpf: '',
-					user_email: '',
-					user_password: '',
-				});
-				navigate('/home');
-			}).catch(() => {
-				return setRegistrationError('Error saving form data');
+			fetch('https://gabrielleaotech.com/sistema/user/register.php', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
 			})
-
-
+				.then(() => {
+					setFormData({
+						user_name: '',
+						user_cpf: '',
+						user_email: '',
+						user_password: '',
+					});
+					navigate('/home');
+				})
+				.catch(() => {
+					return setRegistrationError('Error saving form data');
+				});
 		} catch (error) {
 			console.error(error);
 		}
@@ -143,6 +149,7 @@ function UserForm({ setShowButton }: FormLoginProps) {
 					variant='outlined'
 					value={formData.user_cpf}
 					onChange={handleChange}
+					onKeyUp={formatCPf}
 					helperText={cpfErrorText}
 				/>
 				<TextField
