@@ -67,7 +67,11 @@ function UserForm({ setShowButton }: FormLoginProps) {
 		const inputElement = e.target as HTMLInputElement;
 
 		const cpf = inputElement.value;
-		if (!isCPF(cpf)) {
+
+		const cpfFormatado = formatToCPF(cpf);
+
+		setFormData((prevData) => ({ ...prevData, user_cpf: cpfFormatado }));
+		if (!isCPF(cpfFormatado)) {
 			setIsCpf(true);
 			setCpfErrorText('Invalid CPF!');
 			return;
@@ -75,9 +79,6 @@ function UserForm({ setShowButton }: FormLoginProps) {
 			setIsCpf(false);
 			setCpfErrorText('');
 		}
-		const cpfFormatado = formatToCPF(cpf);
-
-		setFormData((prevData) => ({ ...prevData, user_cpf: cpfFormatado }));
 	};
 
 	const handleSubmit = () => {

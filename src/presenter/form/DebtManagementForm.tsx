@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import styled from 'styled-components';
@@ -49,10 +49,17 @@ type Record = {
 	account_product: string;
 	account_product_value: string;
 };
-
-// ... (código anterior)
-
-// ... (código anterior)
+function formatCurrencyBRL(value: number) {
+	const formattedValue = value.toLocaleString('pt-BR', {
+		style: 'currency',
+		currency: 'BRL',
+	});
+	return formattedValue;
+}
+const formatCPf = (e: KeyboardEvent<HTMLInputElement>) => {
+	const inputElement = e.target as HTMLInputElement;
+	const moeda = formatCurrencyBRL(parseFloat(inputElement.value));
+};
 
 const DebtManagementForm = () => {
 	const theme = useTheme();
