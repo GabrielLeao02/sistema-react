@@ -49,17 +49,15 @@ type Record = {
 	account_product: string;
 	account_product_value: string;
 };
-function formatCurrencyBRL(value: number) {
+// helpers.ts
+
+export function formatCurrencyBRL(value: number) {
 	const formattedValue = value.toLocaleString('pt-BR', {
 		style: 'currency',
 		currency: 'BRL',
 	});
 	return formattedValue;
 }
-const formatCPf = (e: KeyboardEvent<HTMLInputElement>) => {
-	const inputElement = e.target as HTMLInputElement;
-	const moeda = formatCurrencyBRL(parseFloat(inputElement.value));
-};
 
 const DebtManagementForm = () => {
 	const theme = useTheme();
@@ -75,6 +73,32 @@ const DebtManagementForm = () => {
 			account_product_value: '',
 		},
 	]);
+
+	const formatMoeda = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+		const inputElement = e.target as HTMLInputElement;
+		const inputValue = inputElement.value.replace(/\D/g, ''); // Remova todos os caracteres não numéricos
+		const numericValue = parseFloat(inputValue);
+
+		if (!isNaN(numericValue)) {
+			const formattedValue = numericValue / 100;
+
+			const parts = formattedValue.toFixed(2).split('.');
+			const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+			const decimalPart = parts[1];
+
+			const formattedString = `${integerPart},${decimalPart}`;
+
+			setRecords((prevRecords) => {
+				const updatedRecord = {
+					...prevRecords[index],
+					account_product_value: formattedString,
+				};
+				const updatedRecords = [...prevRecords];
+				updatedRecords[index] = updatedRecord;
+				return updatedRecords;
+			});
+		}
+	};
 
 	const handleInputChange = (
 		e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<string>,
@@ -385,6 +409,9 @@ const DebtManagementForm = () => {
 												xl: '50%',
 											},
 										}}
+										onKeyUp={(
+											e: React.KeyboardEvent<HTMLInputElement>
+										) => formatMoeda(e, index)}
 									/>
 								</Box>
 								<RemoveIconWrapper
