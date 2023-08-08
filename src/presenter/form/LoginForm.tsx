@@ -58,7 +58,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 		void handleSubmit();
 	};
 
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		setLoading(true);
 
 		const { user_email, user_password } = formData;
@@ -90,34 +90,30 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 			user_password: hashedPassword,
 		};
 
-
-		fetch(
-			'https://gabrielleaotech.com/sistema/user/login.php',
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(formDataWithHash),
-			}
-		).then((response) => {
-			if (response.status === 401) {
+		fetch('https://gabrielleaotech.com/sistema/user/login.php', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(formDataWithHash),
+		})
+			.then((response) => {
+				if (response.status === 401) {
+					setLoading(false);
+					setErrorLogin('The provided credentials are invalid!');
+					throw new Error('Error logging in');
+				} else if (!response.ok) {
+					setErrorLogin('The provided credentials are invalid!');
+					setLoading(false);
+				}
+				navigate('/home');
+			})
+			.catch(() => {
 				setLoading(false);
+
 				setErrorLogin('The provided credentials are invalid!');
 				throw new Error('Error logging in');
-			} else if (!response.ok) {
-				setErrorLogin('The provided credentials are invalid!');
-				setLoading(false);
-			}
-			navigate('/home');
-		}).catch(() => {
-			setLoading(false);
-
-			setErrorLogin('The provided credentials are invalid!');
-			throw new Error('Error logging in');
-		})
-
-
+			});
 	};
 
 	return (
