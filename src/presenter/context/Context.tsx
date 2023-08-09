@@ -22,7 +22,8 @@ export function UserContextProvider({ children }: UserContextProps) {
 		<UserContext.Provider
 			value={{ loggedUser, setLoggedUser, showButton, setShowButton }}
 		>
-			{loggedUser ? children : <Register />}
+			{children}
+			{/* {loggedUser ? children : <Register />} */}
 		</UserContext.Provider>
 	);
 }

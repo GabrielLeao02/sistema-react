@@ -140,13 +140,19 @@ const DebtManagementForm = () => {
 		const formDataWithHash = {
 			account_data: records,
 		};
+		const modifiedRecords = records.map((record) => ({
+			...record,
+			account_product_value: record.account_product_value
+				.replace('.', '')
+				.replace(',', '.'),
+		}));
 
 		fetch('https://gabrielleaotech.com/sistema/accounts/account.php', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify(records),
+			body: JSON.stringify(modifiedRecords),
 		})
 			.then((response) => {
 				if (!response.ok) {
