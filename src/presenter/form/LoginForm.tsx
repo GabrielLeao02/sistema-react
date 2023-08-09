@@ -29,7 +29,7 @@ function LoginForm() {
 		user_email: '',
 		user_password: '',
 	});
-	const { setShowButton } = useUserContext();
+	const { setShowButton, setLoggedUser } = useUserContext();
 	const handleInputChange = (
 		e:
 			| SelectChangeEvent<string[]>
@@ -96,6 +96,7 @@ function LoginForm() {
 		})
 			.then((response) => {
 				if (response.status === 200) {
+					setLoggedUser(true);
 					navigate('/home');
 				}
 				setErrorLogin('The provided credentials are invalid!');

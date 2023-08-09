@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled } from 'styled-components';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/Context';
 
 const NavBarStyled = styled.div`
 	box-sizing: border-box;
@@ -27,6 +28,7 @@ const NavBarStyled = styled.div`
 const pages = ['Contact', 'Products'];
 
 const NavBar: React.VFC = () => {
+	const { setLoggedUser } = useUserContext();
 	const theme = useTheme();
 	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -42,6 +44,7 @@ const NavBar: React.VFC = () => {
 	};
 
 	const handleLogout = () => {
+		setLoggedUser(false);
 		navigate('/');
 	};
 
