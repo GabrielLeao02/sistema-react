@@ -34,6 +34,12 @@ function UserForm() {
 		user_password: '',
 	});
 
+	const { setShowButton } = useUserContext();
+
+	const register = () => {
+		setShowButton(false);
+	};
+
 	const handleChange = (
 		e:
 			| SelectChangeEvent<string[]>
@@ -171,9 +177,13 @@ function UserForm() {
 					</Typography>
 				</Box>
 
-				<Button variant='contained'>Register</Button>
+				<Button variant='contained' onClick={handleRegistration}>
+					Register
+				</Button>
 
-				<Button variant='outlined'>Login</Button>
+				<Button variant='outlined' onClick={register}>
+					Login
+				</Button>
 			</FormStyled>
 		</>
 	);
