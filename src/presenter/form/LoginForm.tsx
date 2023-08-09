@@ -98,20 +98,17 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 			body: JSON.stringify(formDataWithHash),
 		})
 			.then((response) => {
-				if (response.status === 401) {
-					setLoading(false);
-					setErrorLogin('The provided credentials are invalid!');
-					throw new Error('Error logging in');
-				} else if (!response.ok) {
-					setErrorLogin('The provided credentials are invalid!');
-					setLoading(false);
+				if (response.status === 200) {
+					navigate('/home');
 				}
-				navigate('/home');
+				setErrorLogin('The provided credentials are invalid!');
+				setLoading(false);
 			})
 			.catch(() => {
 				setLoading(false);
 
 				setErrorLogin('The provided credentials are invalid!');
+				
 				throw new Error('Error logging in');
 			});
 	};

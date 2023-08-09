@@ -1,13 +1,18 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useState } from 'react';
 import Home from './presenter/home/home';
 import GlobalContainer from './presenter/containerGlobal/GlobalContainer';
 import StyledContainerWrapper from './presenter/containerGlobal/StyledContainer';
 import { createTheme, Shadows, ThemeProvider } from '@mui/material/styles';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
+import {
+	UserContextProvider,
+	useUserContext,
+} from './presenter/context/Context';
 
 function App() {
-	// Definir a cor primária personalizada
+	// const navigate = useNavigate();
 	const customTheme = createTheme({
 		palette: {
 			primary: {
@@ -62,28 +67,28 @@ function App() {
 
 	return (
 		<ThemeProvider theme={customTheme}>
-			<GlobalContainer>
-				<BrowserRouter>
-					<Routes>
-						<Route path='/' element={<Register />} />
-						<Route
-							path='/home'
-							element={
-								<>
-									<NavBar />
-									<StyledContainerWrapper>
-										<Home />
-									</StyledContainerWrapper>
-								</>
-							}
-						/>
-						<Route
-							path='/register'
-							element={<Register />}
-						/>
-					</Routes>
-				</BrowserRouter>
-			</GlobalContainer>
+			<UserContextProvider>
+				<GlobalContainer>
+					<BrowserRouter>
+						<Routes>
+							
+							<Route path='/' element={<Register />} />
+							<Route
+								path='/home'
+								element={
+									<>
+										<NavBar />
+										<StyledContainerWrapper>
+											<Home />
+										</StyledContainerWrapper>
+									</>
+								}
+							/>
+							<Route path='/register' element={<Register />} />
+						</Routes>
+					</BrowserRouter>
+				</GlobalContainer>
+			</UserContextProvider>
 		</ThemeProvider>
 	);
 }
