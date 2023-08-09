@@ -3,6 +3,7 @@ import UserForm from '../form/UserForm';
 import LoginForm from '../form/LoginForm';
 import { styled } from 'styled-components';
 import StyledContainer from '../containerGlobal/StyledContainer';
+import { useUserContext } from '../context/Context';
 
 const RegisterStyles = styled.div`
 	background-image: url('https://gabrielleaotech.com/image/office.jpg');
@@ -24,17 +25,13 @@ const RegisterStyles = styled.div`
 `;
 
 function Register() {
-	const [showButton, setShowButton] = useState(false);
+	const { showButton } = useUserContext();
 
 	return (
 		<>
 			<RegisterStyles>
 				<StyledContainer>
-					{showButton ? (
-						<UserForm setShowButton={setShowButton} />
-					) : (
-						<LoginForm setShowButton={setShowButton} />
-					)}
+					{showButton ? <UserForm /> : <LoginForm />}
 				</StyledContainer>
 			</RegisterStyles>
 		</>

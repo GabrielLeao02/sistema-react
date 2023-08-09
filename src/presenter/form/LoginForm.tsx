@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import sha256 from 'sha256';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/Context';
 
 const FormStyled = styled.div`
 	box-sizing: border-box;
@@ -18,11 +19,7 @@ const FormStyled = styled.div`
 	gap: 8px;
 `;
 
-type FormLoginProps = {
-	setShowButton: (value: boolean) => void;
-};
-
-function LoginForm({ setShowButton }: FormLoginProps) {
+function LoginForm() {
 	const navigate = useNavigate();
 	const [userEmailError, setUserEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
@@ -32,7 +29,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 		user_email: '',
 		user_password: '',
 	});
-
+	const { setShowButton } = useUserContext();
 	const handleInputChange = (
 		e:
 			| SelectChangeEvent<string[]>
@@ -108,7 +105,7 @@ function LoginForm({ setShowButton }: FormLoginProps) {
 				setLoading(false);
 
 				setErrorLogin('The provided credentials are invalid!');
-				
+
 				throw new Error('Error logging in');
 			});
 	};

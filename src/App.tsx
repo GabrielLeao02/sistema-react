@@ -69,24 +69,21 @@ function App() {
 		<ThemeProvider theme={customTheme}>
 			<UserContextProvider>
 				<GlobalContainer>
-					<BrowserRouter>
-						<Routes>
-							
-							<Route path='/' element={<Register />} />
-							<Route
-								path='/home'
-								element={
-									<>
-										<NavBar />
-										<StyledContainerWrapper>
-											<Home />
-										</StyledContainerWrapper>
-									</>
-								}
-							/>
-							<Route path='/register' element={<Register />} />
-						</Routes>
-					</BrowserRouter>
+					<Routes>
+						<Route path='/' element={<Register />} />
+						<Route
+							path='/home'
+							element={
+								<>
+									<NavBar />
+									<StyledContainerWrapper>
+										<Home />
+									</StyledContainerWrapper>
+								</>
+							}
+						/>
+						<Route path='/register' element={<Register />} />
+					</Routes>
 				</GlobalContainer>
 			</UserContextProvider>
 		</ThemeProvider>

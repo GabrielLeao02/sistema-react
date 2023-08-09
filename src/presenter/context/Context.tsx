@@ -10,16 +10,21 @@ interface UserContextProps {
 interface UserContextType {
 	loggedUser: boolean;
 	setLoggedUser: React.Dispatch<React.SetStateAction<boolean>>;
+	showButton: boolean;
+	setShowButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserContextProvider({ children }: UserContextProps) {
 	const [loggedUser, setLoggedUser] = useState(false);
+	const [showButton, setShowButton] = useState(false);
 
 	return (
-		<UserContext.Provider value={{ loggedUser, setLoggedUser }}>
-			{children}
+		<UserContext.Provider
+			value={{ loggedUser, setLoggedUser, showButton, setShowButton }}
+		>
+			{loggedUser ? children : <Register />}
 		</UserContext.Provider>
 	);
 }

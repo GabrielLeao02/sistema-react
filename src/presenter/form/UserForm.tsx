@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { isCPF, formatToCPF } from 'brazilian-values';
 import sha256 from 'sha256';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../context/Context';
 
 const FormStyled = styled.div`
 	box-sizing: border-box;
@@ -19,11 +20,7 @@ const FormStyled = styled.div`
 	gap: 8px;
 `;
 
-type FormLoginProps = {
-	setShowButton: (value: boolean) => void;
-};
-
-function UserForm({ setShowButton }: FormLoginProps) {
+function UserForm() {
 	const navigate = useNavigate();
 	const [emailError, setEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
@@ -36,13 +33,6 @@ function UserForm({ setShowButton }: FormLoginProps) {
 		user_email: '',
 		user_password: '',
 	});
-
-	const register = () => {
-		// Registration logic
-
-		// After successful registration, call the setShowButton function
-		setShowButton(false);
-	};
 
 	const handleChange = (
 		e:
@@ -181,13 +171,9 @@ function UserForm({ setShowButton }: FormLoginProps) {
 					</Typography>
 				</Box>
 
-				<Button variant='contained' onClick={handleRegistration}>
-					Register
-				</Button>
+				<Button variant='contained'>Register</Button>
 
-				<Button variant='outlined' onClick={register}>
-					Login
-				</Button>
+				<Button variant='outlined'>Login</Button>
 			</FormStyled>
 		</>
 	);
