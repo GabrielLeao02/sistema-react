@@ -20,7 +20,7 @@ const FormStyled = styled.div`
 	gap: 8px;
 `;
 
-function UserForm() {
+const UserForm = () => {
 	const navigate = useNavigate();
 	const [emailError, setEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
@@ -187,6 +187,6 @@ function UserForm() {
 			</FormStyled>
 		</>
 	);
-}
+};
 
 export default UserForm;
