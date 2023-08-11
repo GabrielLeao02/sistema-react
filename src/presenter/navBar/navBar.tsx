@@ -25,7 +25,7 @@ const NavBarStyled = styled.div`
 	align-items: center;
 `;
 
-const pages = ['Contact', 'Products'];
+const pages = ['Statistics'];
 
 const NavBar: React.VFC = () => {
 	const { setLoggedUser } = useUserContext();
@@ -133,6 +133,10 @@ const NavBar: React.VFC = () => {
 											my: 2,
 											color: 'white',
 											display: 'block',
+										}}
+										style={{
+											borderBottom: '1px solid #FFF',
+											borderRadius: '0px',
 										}}
 									>
 										{page}
