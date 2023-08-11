@@ -23,7 +23,7 @@ const RegisterStyles = styled.div`
 	}
 `;
 
-function Register() {
+const  Register = () => {
 	const { showButton } = useUserContext();
 
 	return (

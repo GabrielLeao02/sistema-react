@@ -7,7 +7,7 @@ import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
 import { UserContextProvider } from './presenter/context/Context';
 
-function App() {
+const App = () => {
 	const customTheme = createTheme({
 		palette: {
 			primary: {

@@ -19,7 +19,7 @@ const FormStyled = styled.div`
 	gap: 8px;
 `;
 
-function LoginForm() {
+const LoginForm = () => {
 	const navigate = useNavigate();
 	const [userEmailError, setUserEmailError] = useState(false);
 	const [emailErrorText, setEmailErrorText] = useState('');
@@ -152,6 +152,6 @@ function LoginForm() {
 			</FormStyled>
 		</>
 	);
-}
+};
 
 export default LoginForm;
