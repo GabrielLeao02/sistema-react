@@ -14,7 +14,7 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export function UserContextProvider({ children }: UserContextProps) {
+const UserContextProvider = ({ children }: UserContextProps) => {
 	const [loggedUser, setLoggedUser] = useState(false);
 	const [showButton, setShowButton] = useState(false);
 
@@ -26,7 +26,7 @@ export function UserContextProvider({ children }: UserContextProps) {
 			{/* {loggedUser ? children : <Register />} */}
 		</UserContext.Provider>
 	);
-}
+};
 
 export function useUserContext(): UserContextType {
 	const context = useContext(UserContext);
@@ -37,3 +37,4 @@ export function useUserContext(): UserContextType {
 	}
 	return context;
 }
+export default UserContextProvider;
