@@ -27,7 +27,7 @@ const NavBarStyled = styled.div`
 
 const pages = ['Statistics'];
 
-const NavBar: React.VFC = () => {
+const NavBar = () => {
 	const { setLoggedUser } = useUserContext();
 	const theme = useTheme();
 	const navigate = useNavigate();
