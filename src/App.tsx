@@ -5,7 +5,7 @@ import StyledContainerWrapper from './presenter/containerGlobal/StyledContainer'
 import { createTheme, Shadows, ThemeProvider } from '@mui/material/styles';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
-import { UserContextProvider } from './presenter/context/Context';
+import UserContextProvider from './presenter/context/Context';
 
 const App = () => {
 	const customTheme = createTheme({
