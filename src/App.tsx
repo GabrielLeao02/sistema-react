@@ -6,6 +6,7 @@ import { createTheme, Shadows, ThemeProvider } from '@mui/material/styles';
 import Register from './presenter/register/register';
 import NavBar from './presenter/navBar/navBar';
 import UserContextProvider from './presenter/context/Context';
+import Statistic from './presenter/statistics/statistic';
 
 const App = () => {
 	const customTheme = createTheme({
@@ -78,11 +79,22 @@ const App = () => {
 							}
 						/>
 						<Route path='/register' element={<Register />} />
+						<Route
+							path='/statistics'
+							element={
+								<>
+									<NavBar />
+									<StyledContainerWrapper>
+										<Statistic />
+									</StyledContainerWrapper>
+								</>
+							}
+						/>
 					</Routes>
 				</GlobalContainer>
 			</UserContextProvider>
 		</ThemeProvider>
 	);
-}
+};
 
 export default App;

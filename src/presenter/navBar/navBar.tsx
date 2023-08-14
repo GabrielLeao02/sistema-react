@@ -13,6 +13,7 @@ import { styled } from 'styled-components';
 import { ThemeProvider, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../context/Context';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const NavBarStyled = styled.div`
 	box-sizing: border-box;
@@ -25,7 +26,7 @@ const NavBarStyled = styled.div`
 	align-items: center;
 `;
 
-const pages = ['Statistics'];
+const pages = ['Home', 'Statistics'];
 
 const NavBar = () => {
 	const { setLoggedUser } = useUserContext();
@@ -57,8 +58,8 @@ const NavBar = () => {
 							<Typography
 								variant='h6'
 								noWrap
-								component='a'
-								href='/home'
+								component={Link} // Use Link instead of 'a' tag
+								to='/home' // Set the appropriate route
 								sx={{
 									fontFamily: 'monospace',
 									fontWeight: 700,
@@ -112,7 +113,12 @@ const NavBar = () => {
 											}
 										>
 											<Typography textAlign='center'>
-												{page}
+												<Button
+													to={`/${page}`}
+													component={Link}
+												>
+													{page}
+												</Button>
 											</Typography>
 										</MenuItem>
 									))}
@@ -122,13 +128,15 @@ const NavBar = () => {
 							<Box
 								sx={{
 									flexGrow: 1,
+
 									display: { xs: 'none', md: 'flex' },
 								}}
 							>
 								{pages.map((page) => (
 									<Button
 										key={page}
-										onClick={() => handleCloseNavMenu(page)}
+										component={Link}
+										to={`/${page}`} // This will create the appropriate route
 										sx={{
 											my: 2,
 											color: 'white',
@@ -136,7 +144,11 @@ const NavBar = () => {
 										}}
 										style={{
 											borderBottom: '1px solid #FFF',
+											marginRight: '10px',
 											borderRadius: '0px',
+											padding: '2px',
+											display: 'flex',
+											justifyContent: 'center',
 										}}
 									>
 										{page}
