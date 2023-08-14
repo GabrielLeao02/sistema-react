@@ -9,6 +9,7 @@ const Statistic = () => {
 				id: 'basic-bar',
 				width: '100%',
 			},
+			colors: theme.palette.primary.main,
 			xaxis: {
 				categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
 				labels: {
@@ -17,13 +18,7 @@ const Statistic = () => {
 					},
 				},
 			},
-			yaxis: {
-				labels: {
-					style: {
-						colors: theme.palette.primary.light, // Cor dos valores do eixo y (série de dados)
-					},
-				},
-			},
+
 			plotOptions: {
 				bar: {
 					dataLabels: {
