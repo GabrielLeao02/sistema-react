@@ -10,7 +10,7 @@ class AccountDataSource {
 			const response = await axios.get(this.baseUrl);
 			return [new AccountStatistic()];
 		} catch (error) {
-			throw new Error('Error fetching accounts');
+			throw new Error('Error fetching account');
 		}
 	}
 }
